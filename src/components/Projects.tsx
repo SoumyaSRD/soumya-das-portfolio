@@ -80,7 +80,7 @@ export const Projects: React.FC = () => {
   );
 
   return (
-    <section id="projects" className="w-full py-20 px-6 max-w-6xl mx-auto border-b border-border-custom relative select-none">
+    <section id="projects" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-b border-border-custom relative select-none">
       <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-accent-glow blur-[140px] pointer-events-none rounded-full" />
 
       {/* Header */}
@@ -193,12 +193,12 @@ export const Projects: React.FC = () => {
               </div>
 
               {/* Centered Actions Buttons */}
-              <div className="flex gap-2.5 pt-2.5 no-print select-none">
+              <div className="flex flex-col xs:flex-row gap-2.5 pt-2.5 no-print select-none w-full justify-center">
                 <a
                   href={proj.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97"
+                  className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97 w-full xs:w-auto"
                 >
                   <Github size={12} /> Source Code
                 </a>
@@ -208,7 +208,7 @@ export const Projects: React.FC = () => {
                     e.preventDefault();
                     alert(`Loading interactive preview mockup for: ${proj.title}`);
                   }}
-                  className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97"
+                  className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97 w-full xs:w-auto"
                 >
                   <ExternalLink size={12} /> Live Demo
                 </a>

@@ -73,7 +73,7 @@ export const ThemeSwitcher: React.FC = () => {
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme.id)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer transition-all duration-300 relative ${
+              className={`p-2.5 sm:px-3 sm:py-1.5 rounded-full text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 relative ${
                 isActive
                   ? 'bg-bg-primary text-text-primary border border-border-custom shadow-sm scale-105'
                   : 'hover:bg-bg-primary/40 text-text-muted hover:text-text-primary border border-transparent'

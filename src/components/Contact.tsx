@@ -58,7 +58,7 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="w-full py-20 px-6 max-w-6xl mx-auto relative select-none">
+    <section id="contact" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto relative select-none">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-accent-glow blur-[150px] pointer-events-none rounded-full" />
 
       {/* Header */}
@@ -134,7 +134,7 @@ export const Contact: React.FC = () => {
 
       {/* 3. Centered Secure Form Wrapper */}
       <div
-        className="max-w-2xl mx-auto glass-panel p-5 sm:p-6 md:p-8 border border-white/5 relative select-text"
+        className="max-w-2xl mx-auto glass-panel p-5 sm:p-6 md:p-8 border border-border-custom relative select-text"
         style={{
           boxShadow: 'var(--theme-glow-style)',
           borderRadius: 'var(--card-radius)',

@@ -44,7 +44,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[90vh] flex flex-col justify-center items-center py-20 px-6 overflow-hidden select-none border-b border-border-custom"
+      className="relative w-full min-h-[90vh] flex flex-col justify-center items-center py-20 px-4 sm:px-8 md:px-12 overflow-hidden select-none border-b border-border-custom"
     >
       {/* 1. Theme-Specific Visual Accents */}
       <div className="absolute inset-0 theme-grid-overlay z-0" />
@@ -56,7 +56,7 @@ export const Hero: React.FC = () => {
         <motion.div
           animate={{ y: [0, -12, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-[10%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-white/10 text-xs font-mono font-bold shadow-sm"
+          className="absolute top-[20%] left-[10%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
         >
           <Code2 size={12} className="text-accent-primary" /> NgRx Architecture
         </motion.div>
@@ -64,7 +64,7 @@ export const Hero: React.FC = () => {
         <motion.div
           animate={{ y: [0, 15, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-[45%] right-[8%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-white/10 text-xs font-mono font-bold shadow-sm"
+          className="absolute top-[45%] right-[8%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
         >
           <Globe size={12} className="text-accent-secondary" /> NestJS Microservices
         </motion.div>
@@ -72,19 +72,19 @@ export const Hero: React.FC = () => {
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute bottom-[20%] left-[15%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-white/10 text-xs font-mono font-bold shadow-sm"
+          className="absolute bottom-[20%] left-[15%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
         >
           <Award size={12} className="text-[#e23f5f]" /> Monorepo Specialist
         </motion.div>
       </div>
 
       {/* 3. Main Content Container */}
-      <div className="relative z-20 max-w-4xl text-center flex flex-col items-center space-y-8">
+      <div className="relative z-20 w-full max-w-5xl text-center flex flex-col items-center space-y-8">
         
         {/* Custom Profile Circle Frame */}
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-white/15 bg-bg-secondary flex items-center justify-center">
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-border-custom bg-bg-secondary flex items-center justify-center">
             <img
               src="/developer_avatar.png"
               alt={personalInfo.name}
@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight select-text">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight select-text">
           Crafting Scalable <br />
           <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
             Enterprise Platforms
@@ -107,7 +107,7 @@ export const Hero: React.FC = () => {
         </h1>
 
         {/* Typing Subtitle */}
-        <div className="h-8 flex items-center justify-center font-mono text-sm md:text-lg text-text-muted select-text">
+        <div className="min-h-8 py-1.5 flex items-center justify-center font-mono text-xs xs:text-sm md:text-lg text-text-muted select-text">
           <span>Expert in: </span>
           <span className="ml-2 font-bold text-text-primary typing-caret pr-1.5">
             {typedText}

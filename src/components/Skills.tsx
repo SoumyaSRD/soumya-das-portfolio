@@ -6,7 +6,7 @@ export const Skills: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<number>(0);
 
   return (
-    <section id="skills" className="w-full py-20 px-6 max-w-6xl mx-auto border-b border-border-custom relative select-none">
+    <section id="skills" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-b border-border-custom relative select-none">
       <div className="absolute bottom-10 right-10 w-60 h-60 bg-accent-glow blur-[140px] pointer-events-none rounded-full" />
       
       {/* Header */}
@@ -51,7 +51,7 @@ export const Skills: React.FC = () => {
           return (
             <div
               key={idx}
-              className="glass-panel p-4 sm:p-5 md:p-6 border border-white/5 relative overflow-hidden group select-none hover:-translate-y-1.5 transition-all duration-300"
+              className="glass-panel p-4 sm:p-5 md:p-6 border border-border-custom relative overflow-hidden group select-none hover:-translate-y-1.5 transition-all duration-300"
               style={{
                 borderRadius: 'var(--card-radius)',
               }}

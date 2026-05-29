@@ -124,7 +124,7 @@ export const ChatBot: React.FC = () => {
       {/* 2. Expanded Chatbot Window */}
       {isOpen && (
         <div
-          className="w-[350px] md:w-[400px] h-[500px] glass-panel flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300"
+          className="w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] h-[500px] glass-panel flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300"
           style={{
             boxShadow: 'var(--theme-glow-style)',
           }}

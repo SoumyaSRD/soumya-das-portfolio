@@ -84,7 +84,7 @@ function App() {
          NAVIGATION HEADER (Sticky, Blur Glassmorphism)
          ---------------------------------------------------- */}
       <header className="no-print sticky top-0 w-full z-40 bg-bg-primary/75 backdrop-blur-md border-b border-border-custom transition-all duration-300">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 py-4 flex items-center justify-between">
           
           {/* Logo Brand */}
           <button
@@ -137,7 +137,7 @@ function App() {
         <Hero />
 
         {/* 2. Embedded Command-Line terminal terminal shell widget */}
-        <div className="no-print w-full max-w-4xl mx-auto px-6 py-10 select-none">
+        <div className="no-print w-full max-w-5xl mx-auto px-4 sm:px-8 md:px-12 py-10 select-none">
           <div className="text-center mb-6">
             <p className="text-[10px] font-bold uppercase tracking-widest text-accent-secondary font-mono">
               [ Interactive Developer Shell ]
@@ -162,7 +162,7 @@ function App() {
         <Projects />
 
         {/* 7. Certifications & Floating Secondary Interests Section */}
-        <section id="certifications" className="w-full py-20 px-6 max-w-6xl mx-auto border-b border-border-custom relative select-none">
+        <section id="certifications" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-b border-border-custom relative select-none">
           <div className="absolute top-10 left-10 w-48 h-48 bg-accent-glow blur-[100px] pointer-events-none rounded-full" />
           
           <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
@@ -177,11 +177,11 @@ function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
             {certificationsAndInterests.map((cert, idx) => (
               <div
                 key={idx}
-                className="glass-panel p-5 border border-white/5 flex flex-col items-center text-center justify-center relative overflow-hidden group hover:-translate-y-1.5 transition-all duration-300 select-none cursor-default"
+                className="glass-panel p-4 sm:p-5 border border-border-custom flex flex-col items-center text-center justify-center relative overflow-hidden group hover:-translate-y-1.5 transition-all duration-300 select-none cursor-default"
                 style={{
                   borderRadius: 'var(--card-radius)',
                   boxShadow: 'var(--theme-glow-style)',
@@ -202,7 +202,7 @@ function App() {
         </section>
 
         {/* 8. Pinned Knowledge & Blog placeholder cards */}
-        <section id="blog" className="w-full py-20 px-6 max-w-6xl mx-auto border-b border-border-custom relative select-none">
+        <section id="blog" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-b border-border-custom relative select-none">
           <div className="absolute bottom-10 right-1/4 w-52 h-52 bg-accent-glow blur-[120px] pointer-events-none rounded-full" />
           
           <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
@@ -221,7 +221,7 @@ function App() {
             {mockBlogs.map((blog) => (
               <article
                 key={blog.id}
-                className="glass-panel p-6 border border-white/5 flex flex-col justify-between hover:border-accent-primary/30 transition-all duration-300 relative group"
+                className="glass-panel p-6 border border-border-custom flex flex-col justify-between hover:border-accent-primary/30 transition-all duration-300 relative group"
                 style={{
                   borderRadius: 'var(--card-radius)',
                 }}
@@ -264,7 +264,7 @@ function App() {
          PAGE FOOTER (Corporate dashboard standard)
          ---------------------------------------------------- */}
       <footer className="w-full bg-bg-secondary border-t border-border-custom py-12 px-6 relative z-10 select-none">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
           
           <div className="text-center md:text-left space-y-2">
             <h3 className="text-xs font-mono font-extrabold uppercase tracking-wider text-text-primary">

@@ -60,7 +60,7 @@ const StatCounter: React.FC<CounterProps> = ({ endVal, label }) => {
 
 export const About: React.FC = () => {
   return (
-    <section id="about" className="w-full py-20 px-6 max-w-6xl mx-auto border-b border-border-custom relative select-none">
+    <section id="about" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto border-b border-border-custom relative select-none">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 bg-accent-glow blur-[120px] pointer-events-none rounded-full" />
 
       {/* Main Content Centered */}
