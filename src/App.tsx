@@ -4,6 +4,8 @@ import { TerminalIntro } from './components/TerminalIntro';
 import { ChatBot } from './components/ChatBot';
 import { CommandPalette } from './components/CommandPalette';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { useI18n } from './context/I18nContext';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
@@ -14,6 +16,7 @@ import { certificationsAndInterests, mockBlogs, personalInfo } from './data/port
 import { Terminal as TermIcon, FileText, ChevronUp, Github, Linkedin, Mail, MessageSquarePlus } from 'lucide-react';
 
 function App() {
+  const { t } = useI18n();
   const [hasBooted, setHasBooted] = useState<boolean>(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
@@ -92,19 +95,19 @@ function App() {
             className="flex items-center gap-2 cursor-pointer font-mono font-black text-xs md:text-sm tracking-wider uppercase text-text-primary hover:text-accent-primary transition-all group"
           >
             <TermIcon size={16} className="text-accent-primary animate-pulse group-hover:rotate-12 transition-transform" />
-            <span>srd.OS</span>
+            <span>{t('nav.brand')}</span>
           </button>
 
           {/* Center Navigation Anchors */}
           <nav className="hidden lg:flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider font-sans">
             {[
-              { id: 'about', label: 'About' },
-              { id: 'skills', label: 'Skills' },
-              { id: 'experience', label: 'Timeline' },
-              { id: 'projects', label: 'Showroom' },
-              { id: 'certifications', label: 'Interests' },
-              { id: 'blog', label: 'Blog' },
-              { id: 'contact', label: 'Contact' },
+              { id: 'about', label: t('nav.about') },
+              { id: 'skills', label: t('nav.skills') },
+              { id: 'experience', label: t('nav.timeline') },
+              { id: 'projects', label: t('nav.showroom') },
+              { id: 'certifications', label: t('nav.interests') },
+              { id: 'blog', label: t('nav.blog') },
+              { id: 'contact', label: t('nav.contact') },
             ].map((link) => (
               <button
                 key={link.id}
@@ -123,6 +126,7 @@ function App() {
           {/* Command Menu Finder & Theme switcher widgets */}
           <div className="flex items-center gap-4">
             <CommandPalette />
+            <LanguageSwitcher />
             <ThemeSwitcher />
           </div>
 
@@ -167,13 +171,13 @@ function App() {
           
           <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-              <FileText size={11} className="animate-pulse" /> Domain Versatility
+              <FileText size={11} className="animate-pulse" /> {t('certifications.badge')}
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-              Certifications & Interests
+              {t('certifications.title')}
             </h2>
             <p className="text-xs text-text-muted leading-relaxed">
-              Explore dynamic float cards representing secondary capabilities and certifications that enrich my fullstack vision.
+              {t('certifications.desc')}
             </p>
           </div>
 
@@ -207,13 +211,13 @@ function App() {
           
           <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-              <MessageSquarePlus size={11} className="animate-pulse" /> Engineering Insights
+              <MessageSquarePlus size={11} className="animate-pulse" /> {t('blog.badge')}
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-              Technical Blog Pinned
+              {t('blog.title')}
             </h2>
             <p className="text-xs text-text-muted leading-relaxed">
-              Sharing software engineering and system architecture thinking from years of code delivery.
+              {t('blog.desc')}
             </p>
           </div>
 
@@ -271,7 +275,7 @@ function App() {
               Soumya Ranjan Das
             </h3>
             <p className="text-[10px] text-text-muted leading-relaxed">
-              Senior Fullstack Developer & Angular Architect. © {new Date().getFullYear()} All rights reserved.
+              © {new Date().getFullYear()} - {t('footer.role')}
             </p>
           </div>
 

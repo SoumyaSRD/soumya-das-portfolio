@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, ArrowRight, Terminal as TermIcon, Award, Code2, Globe } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Terminal as TermIcon, Code2, Globe } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { motion } from 'framer-motion';
+import { useI18n } from '../context/I18nContext';
 
 export const Hero: React.FC = () => {
+  const { t, language } = useI18n();
   const [titleIdx, setTitleIdx] = useState<number>(0);
   const [typedText, setTypedText] = useState<string>('');
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [activeTheme, setActiveTheme] = useState<string>('dark-dev');
+
+  // Listen to active theme changes
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('srd-portfolio-theme') || 'dark-dev';
+    setActiveTheme(savedTheme);
+
+    const handleThemeChange = (e: any) => {
+      setActiveTheme(e.detail);
+    };
+    window.addEventListener('theme-changed', handleThemeChange);
+    return () => window.removeEventListener('theme-changed', handleThemeChange);
+  }, []);
 
   // Rotating typing effect logic
   useEffect(() => {
-    const fullText = personalInfo.titles[titleIdx];
+    const titles = [
+      t('hero.titles.0'),
+      t('hero.titles.1'),
+      t('hero.titles.2'),
+      t('hero.titles.3')
+    ];
+    const fullText = titles[titleIdx] || '';
     let timer: any;
 
     if (isDeleting) {
@@ -25,14 +46,21 @@ export const Hero: React.FC = () => {
 
     // Phase transition checks
     if (!isDeleting && typedText === fullText) {
-      timer = setTimeout(() => setIsDeleting(true), 1800); // Wait at complete text
+      timer = setTimeout(() => setIsDeleting(true), 1800);
     } else if (isDeleting && typedText === '') {
       setIsDeleting(false);
-      setTitleIdx((prev) => (prev + 1) % personalInfo.titles.length);
+      setTitleIdx((prev) => (prev + 1) % titles.length);
     }
 
     return () => clearTimeout(timer);
-  }, [typedText, isDeleting, titleIdx]);
+  }, [typedText, isDeleting, titleIdx, language, t]);
+
+  // Reset typing carousel on language change to keep it robust and synchronous
+  useEffect(() => {
+    setTypedText('');
+    setIsDeleting(false);
+    setTitleIdx(0);
+  }, [language]);
 
   const scrollToAnchor = (id: string) => {
     const element = document.getElementById(id);
@@ -44,47 +72,37 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[90vh] flex flex-col justify-center items-center py-20 px-4 sm:px-8 md:px-12 overflow-hidden select-none border-b border-border-custom"
+      className="relative w-full min-h-[85vh] flex flex-col justify-center items-center py-20 px-4 sm:px-8 md:px-12 overflow-hidden select-none border-b border-border-custom"
     >
-      {/* 1. Theme-Specific Visual Accents */}
+      {/* Dynamic Theme Grids & Background Orbs */}
       <div className="absolute inset-0 theme-grid-overlay z-0" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-accent-glow blur-[100px] pointer-events-none z-0 animate-pulse duration-5000" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-accent-glow blur-[110px] pointer-events-none z-0 animate-pulse duration-5000" />
 
-      {/* 2. Floating Tech Badges (Using simple Framer Motion float lines) */}
+      {/* Floating Interactive Technical Tags */}
       <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden hidden md:block">
-        {/* Badge 1 */}
-        <motion.div
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-[10%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
-        >
-          <Code2 size={12} className="text-accent-primary" /> NgRx Architecture
-        </motion.div>
-        {/* Badge 2 */}
-        <motion.div
-          animate={{ y: [0, 15, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-[45%] right-[8%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
-        >
-          <Globe size={12} className="text-accent-secondary" /> NestJS Microservices
-        </motion.div>
-        {/* Badge 3 */}
         <motion.div
           animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute bottom-[20%] left-[15%] glass-panel px-3 py-1.5 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold shadow-sm"
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[22%] left-[12%] glass-panel px-3.5 py-2 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold text-text-primary shadow-sm"
         >
-          <Award size={12} className="text-[#e23f5f]" /> Monorepo Specialist
+          <Code2 size={12} className="text-accent-primary animate-pulse" /> NgRx Architecture
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute top-[48%] right-[10%] glass-panel px-3.5 py-2 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold text-text-primary shadow-sm"
+        >
+          <Globe size={12} className="text-accent-secondary animate-pulse" /> NestJS APIs
         </motion.div>
       </div>
 
-      {/* 3. Main Content Container */}
-      <div className="relative z-20 w-full max-w-5xl text-center flex flex-col items-center space-y-8">
+      {/* Main Core Landing Content */}
+      <div className="relative z-20 w-full max-w-5xl text-center flex flex-col items-center space-y-8 select-text">
         
-        {/* Custom Profile Circle Frame */}
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-border-custom bg-bg-secondary flex items-center justify-center">
+        {/* Profile Circle with Glowing Spotlight Rings */}
+        <div className="relative group select-none">
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-border-custom bg-bg-secondary flex items-center justify-center shadow-lg">
             <img
               src="/developer_avatar.png"
               alt={personalInfo.name}
@@ -93,66 +111,88 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Hello Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-bg-secondary/60 border border-border-custom rounded-full text-xs font-semibold text-accent-primary uppercase tracking-widest font-mono shadow-sm">
-          <TermIcon size={12} className="animate-pulse" /> Soumya Ranjan Das
+        {/* Brand Tag */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-bg-secondary/60 border border-border-custom rounded-full text-xs font-semibold text-accent-primary uppercase tracking-widest font-mono shadow-sm select-none">
+          <TermIcon size={12} className="animate-pulse" /> {t('hero.badge')}
         </div>
 
-        {/* Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight select-text">
-          Crafting Scalable <br />
-          <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-            Enterprise Platforms
-          </span>
-        </h1>
+        {/* Title Mappings Conditionally Built */}
+        {activeTheme === 'cyberpunk' ? (
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight font-mono">
+            {t('hero.title1')} <br />
+            <span className="bg-white text-black px-4 py-0.5 rounded inline-block mt-2">
+              {t('hero.title2')}
+            </span>
+          </h1>
+        ) : activeTheme === 'classical' ? (
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-extrabold tracking-tight text-text-primary uppercase leading-tight">
+            {t('hero.title1')} <br />
+            <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent italic">
+              {t('hero.title2')}
+            </span>
+          </h1>
+        ) : (
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight">
+            {t('hero.title1')} <br />
+            <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+              {t('hero.title2')}
+            </span>
+          </h1>
+        )}
 
-        {/* Typing Subtitle */}
-        <div className="min-h-8 py-1.5 flex items-center justify-center font-mono text-xs xs:text-sm md:text-lg text-text-muted select-text">
-          <span>Expert in: </span>
+        {/* Typing rotation subtitle */}
+        <div className="min-h-8 py-1.5 flex items-center justify-center font-mono text-xs xs:text-sm md:text-lg text-text-muted select-none">
+          <span>{t('hero.expert')}</span>
           <span className="ml-2 font-bold text-text-primary typing-caret pr-1.5">
             {typedText}
           </span>
         </div>
 
-        {/* Short Summary Bio */}
-        <p className="max-w-xl text-xs md:text-sm text-text-muted leading-relaxed select-text">
-          {personalInfo.bio} Specialized in building high-fidelity logistics platforms, robust state architectures, and mentoring high-output agile engineering teams.
-        </p>
+        {/* Short Summary biography supporting elegant drop caps */}
+        {activeTheme === 'classical' ? (
+          <p className="max-w-xl text-xs md:text-sm text-text-muted leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-accent-primary first-letter:float-left first-letter:mr-2.5 first-letter:font-display">
+            {t('hero.bio')}
+          </p>
+        ) : (
+          <p className="max-w-xl text-xs md:text-sm text-text-muted leading-relaxed">
+            {t('hero.bio')}
+          </p>
+        )}
 
-        {/* CTA Button Group */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+        {/* Dynamic CTA Button Actions */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 select-none">
           <button
             onClick={() => scrollToAnchor('projects')}
             className="w-full sm:w-auto px-6 py-3 rounded-full bg-accent-primary text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-105 active:scale-95 transition-all group"
             style={{ boxShadow: 'var(--theme-glow-style)' }}
           >
-            Explore Projects
+            {t('hero.cta.projects')}
             <ArrowRight size={13} className="transition-transform group-hover:translate-x-1.5" />
           </button>
           
           <button
             onClick={() => scrollToAnchor('contact')}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-bg-secondary hover:bg-border-custom border border-border-custom text-text-primary text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+            className="w-full sm:w-auto px-6 py-3 rounded-full bg-bg-secondary hover:bg-border-custom border border-border-custom text-text-primary text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 animate-pulse"
           >
-            Contact Me
+            {t('hero.cta.book')}
           </button>
 
           <button
             onClick={() => window.print()}
             className="w-full sm:w-auto px-6 py-3 rounded-full bg-transparent hover:bg-white/5 border border-dashed border-border-custom text-text-muted hover:text-text-primary text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all"
           >
-            Print CV / Resume
+            {t('hero.cta.cv')}
           </button>
         </div>
 
-        {/* Social Badges Grid */}
-        <div className="flex items-center gap-6 pt-8">
+        {/* Social connections links */}
+        <div className="flex items-center gap-6 pt-8 select-none">
           <a
             href={`https://github.com/${personalInfo.github}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="GitHub Profile"
+            title="GitHub"
           >
             <Github size={18} />
           </a>
@@ -161,14 +201,14 @@ export const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="LinkedIn Profile"
+            title="LinkedIn"
           >
             <Linkedin size={18} />
           </a>
           <a
             href={`mailto:${personalInfo.email}`}
             className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="Send Email"
+            title="Email"
           >
             <Mail size={18} />
           </a>

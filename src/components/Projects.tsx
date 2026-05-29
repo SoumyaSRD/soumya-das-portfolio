@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { suggestedProjects, personalInfo } from '../data/portfolioData';
 import { Github, ExternalLink, Star, GitFork, Grid } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
 export const Projects: React.FC = () => {
+  const { t } = useI18n();
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [projectsList, setProjectsList] = useState(suggestedProjects);
   const [gitStats, setGitStats] = useState({
@@ -86,13 +88,13 @@ export const Projects: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-          <Grid size={11} className="animate-pulse" /> Engineering Showroom
+          <Grid size={11} className="animate-pulse" /> {t('projects.badge')}
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-          Project Showroom
+          {t('projects.title')}
         </h2>
         <p className="text-xs text-text-muted leading-relaxed">
-          Explore key fullstack web builds. GitHub indicators are dynamically updated via active GitHub REST modules.
+          {t('projects.desc')}
         </p>
         
         {/* SEO and Compiler Friendly Accessible Stats Anchor */}
@@ -200,7 +202,7 @@ export const Projects: React.FC = () => {
                   rel="noopener noreferrer"
                   className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97 w-full xs:w-auto"
                 >
-                  <Github size={12} /> Source Code
+                  <Github size={12} /> {t('projects.source')}
                 </a>
                 <a
                   href="#"
@@ -210,7 +212,7 @@ export const Projects: React.FC = () => {
                   }}
                   className="px-3 py-1.5 bg-bg-secondary hover:bg-border-custom border border-border-custom hover:border-accent-primary text-text-muted hover:text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:scale-103 active:scale-97 w-full xs:w-auto"
                 >
-                  <ExternalLink size={12} /> Live Demo
+                  <ExternalLink size={12} /> {t('projects.demo')}
                 </a>
               </div>
             </div>
@@ -218,10 +220,10 @@ export const Projects: React.FC = () => {
             {/* Dynamic Card Footer Metrics (Centered!) */}
             <div className="px-6 py-3.5 bg-bg-secondary/40 border-t border-border-custom flex justify-center items-center gap-6 text-[10px] text-text-muted font-mono select-none">
               <span className="flex items-center gap-1">
-                <Star size={11} className="text-amber-400 fill-amber-400/25" /> {proj.stars || 120} stars
+                <Star size={11} className="text-amber-400 fill-amber-400/25" /> {proj.stars || 120} {t('projects.stars')}
               </span>
               <span className="flex items-center gap-1">
-                <GitFork size={11} className="text-accent-secondary" /> {proj.forks || 30} forks
+                <GitFork size={11} className="text-accent-secondary" /> {proj.forks || 30} {t('projects.forks')}
               </span>
             </div>
 

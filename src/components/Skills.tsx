@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { skillCategories } from '../data/portfolioData';
 import { Terminal as TermIcon, Brain } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
 export const Skills: React.FC = () => {
+  const { t } = useI18n();
   const [activeCategory, setActiveCategory] = useState<number>(0);
 
   return (
@@ -12,13 +14,13 @@ export const Skills: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-          <Brain size={11} className="animate-pulse" /> Technical Stack
+          <Brain size={11} className="animate-pulse" /> {t('skills.badge')}
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-          Skill Taxonomy
+          {t('skills.title')}
         </h2>
         <p className="text-xs text-text-muted leading-relaxed">
-          Hover over individual cards to experience active electromagnetic glows tuned to each technology’s branding.
+          {t('skills.desc')}
         </p>
       </div>
 
@@ -97,7 +99,7 @@ export const Skills: React.FC = () => {
 
                 {/* Tiny Badge */}
                 <div className="text-[9px] text-text-muted flex items-center justify-center gap-1 font-mono uppercase tracking-wider">
-                  <TermIcon size={9} className="text-text-muted/60" /> Production Verified
+                  <TermIcon size={9} className="text-text-muted/60" /> {t('skills.verified')}
                 </div>
               </div>
 

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syncopate:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 @import "tailwindcss";
 
 /* ----------------------------------------------------
-   Tailwind CSS v4.0 Custom Theme Settings
+   Tailwind CSS v4.0 Custom Theme System
    ---------------------------------------------------- */
 @theme {
   --font-sans: var(--font-body), 'Inter', sans-serif;
@@ -19,16 +19,16 @@
 }
 
 /* ----------------------------------------------------
-   Theme Systems Configuration (CSS Variables)
+   Visual Style Themes (CSS Variables)
    ---------------------------------------------------- */
 
-/* 1. Dark Developer Theme (Default) */
+/* Theme 1: Stark Neo-Minimal Slate (Default Dark Mode) */
 :root, :root[data-theme="dark-dev"] {
-  --bg-primary: #050508;
-  --bg-secondary: #0c0d12;
-  --accent-primary: #3b82f6; /* Neon Blue */
-  --accent-secondary: #8b5cf6; /* Cyber Purple */
-  --accent-glow: rgba(59, 130, 246, 0.1);
+  --bg-primary: #07090e; /* Luxury space slate dark */
+  --bg-secondary: #0e121a; /* Panel slate */
+  --accent-primary: #3b82f6; /* SaaS Blue */
+  --accent-secondary: #6366f1; /* Modern Indigo */
+  --accent-glow: rgba(59, 130, 246, 0.08);
   --text-primary: #f8fafc;
   --text-muted: #cbd5e1;
   --border-color: rgba(255, 255, 255, 0.08);
@@ -36,90 +36,90 @@
   --font-display-font: 'Inter', sans-serif;
   --font-code: 'JetBrains Mono', monospace;
   --card-radius: 12px;
-  --theme-glow-style: 0 0 30px rgba(59, 130, 246, 0.08), 0 8px 32px rgba(5, 5, 8, 0.4);
-  --glass-bg: rgba(12, 13, 18, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --theme-glow-style: 0 0 35px rgba(59, 130, 246, 0.06), 0 8px 32px rgba(7, 9, 14, 0.4);
+  --glass-bg: rgba(14, 18, 26, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.05);
 }
 
-/* 2. Enterprise Professional Theme */
+/* Theme 2: Cool Nordic Frost (Light Mode) */
 :root[data-theme="enterprise"] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --accent-primary: #0f172a; /* Sophisticated Slate */
-  --accent-secondary: #334155;
-  --accent-glow: rgba(15, 23, 42, 0.03);
-  --text-primary: #0f172a;
-  --text-muted: #475569;
-  --border-color: rgba(15, 23, 42, 0.08);
+  --bg-primary: #f5f8fa; /* Ice-white clean background */
+  --bg-secondary: #ffffff; /* Symmetrical crisp white panels */
+  --accent-primary: #1d3557; /* Deep royal navy */
+  --accent-secondary: #457b9d; /* Aurora steel blue */
+  --accent-glow: rgba(29, 53, 87, 0.03);
+  --text-primary: #1d3557;
+  --text-muted: #3a506b; /* High-contrast slate navy blue */
+  --border-color: rgba(29, 53, 87, 0.08);
   --font-body: 'Plus Jakarta Sans', sans-serif;
   --font-display-font: 'Plus Jakarta Sans', sans-serif;
   --font-code: 'JetBrains Mono', monospace;
-  --card-radius: 8px;
-  --theme-glow-style: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 16px -6px rgba(15, 23, 42, 0.05);
+  --card-radius: 10px;
+  --theme-glow-style: 0 8px 24px rgba(29, 53, 87, 0.04);
   --glass-bg: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(15, 23, 42, 0.06);
+  --glass-border: rgba(29, 53, 87, 0.05);
 }
 
-/* 3. Cyberpunk Futuristic Theme */
-:root[data-theme="cyberpunk"] {
-  --bg-primary: #090212;
-  --bg-secondary: #120324;
-  --accent-primary: #ff007f; /* Neon Hot Pink */
-  --accent-secondary: #00ffff; /* Neon Cyan */
-  --accent-glow: rgba(255, 0, 127, 0.25);
-  --text-primary: #ffffff;
-  --text-muted: #f472b6;
-  --border-color: rgba(255, 0, 127, 0.4);
-  --font-body: 'Inter', sans-serif; /* Readable sans for body content */
-  --font-display-font: 'Syncopate', sans-serif; /* Wide cyberpunk font ONLY for large headers */
-  --font-code: 'JetBrains Mono', monospace;
-  --card-radius: 0px;
-  --theme-glow-style: 0 0 25px rgba(255, 0, 127, 0.25), 0 4px 12px rgba(0, 255, 255, 0.15);
-  --glass-bg: rgba(18, 3, 36, 0.9);
-  --glass-border: rgba(255, 0, 127, 0.25);
-  letter-spacing: -0.04em;
-}
-
-/* 4. Minimal Scandinavian Theme */
+/* Theme 3: Cozy Warm Sage Scandinavian (Light Mode) */
 :root[data-theme="scandinavian"] {
-  --bg-primary: #f5f4f0;
-  --bg-secondary: #e9e7df;
-  --accent-primary: #232c27;
-  --accent-secondary: #48564e;
-  --accent-glow: rgba(35, 44, 39, 0.04);
-  --text-primary: #121815;
-  --text-muted: #4e5952;
-  --border-color: rgba(35, 44, 39, 0.12);
+  --bg-primary: #f7f6f0; /* Soft natural cream-sand */
+  --bg-secondary: #eceae1; /* Warm structural stone panels */
+  --accent-primary: #3a506b; /* Cozy slate blue */
+  --accent-secondary: #5c677d; /* Forest sage green */
+  --accent-glow: rgba(58, 80, 107, 0.04);
+  --text-primary: #1c2541;
+  --text-muted: #3a4750; /* Highly readable dark slate charcoal */
+  --border-color: rgba(58, 80, 107, 0.12);
   --font-body: 'Outfit', sans-serif;
   --font-display-font: 'Outfit', sans-serif;
   --font-code: 'monospace';
-  --card-radius: 20px;
-  --theme-glow-style: 0 12px 30px -10px rgba(35, 44, 39, 0.06), 0 4px 12px -5px rgba(35, 44, 39, 0.03);
-  --glass-bg: rgba(233, 231, 223, 0.85);
-  --glass-border: rgba(35, 44, 39, 0.08);
+  --card-radius: 24px; /* Comforting large curves */
+  --theme-glow-style: 0 12px 30px -10px rgba(58, 80, 107, 0.05), 0 4px 12px -5px rgba(58, 80, 107, 0.03);
+  --glass-bg: rgba(236, 234, 225, 0.85);
+  --glass-border: rgba(58, 80, 107, 0.08);
 }
 
-/* 5. Classical Editorial Theme */
+/* Theme 4: Royal Editorial Burgundy (Light Mode) */
 :root[data-theme="classical"] {
-  --bg-primary: #fdfcf7; /* Premium aged parchment cream */
-  --bg-secondary: #f4f1ea; /* Soft warm stone */
-  --accent-primary: #800020; /* Royal Burgundy / Bordeaux Red */
-  --accent-secondary: #3d503f; /* Deep Scholarly Sage Green */
-  --accent-glow: rgba(128, 0, 32, 0.02);
-  --text-primary: #1c1a17; /* High-contrast charcoal sepia */
-  --text-muted: #5e564d; /* Muted stone brown-charcoal */
-  --border-color: rgba(128, 0, 32, 0.12); /* Subtle burgundy lines */
-  --font-body: 'Lora', serif; /* Elegant classical serif body text */
-  --font-display-font: 'Playfair Display', 'Lora', serif; /* Traditional editorial headings */
+  --bg-primary: #fbfaf2; /* Elegant book ivory parchment */
+  --bg-secondary: #f4efe3; /* Warm antique stone spine */
+  --accent-primary: #8b0000; /* Royal Bordeaux Burgundy */
+  --accent-secondary: #2f3e23; /* Scholarly forest sage green */
+  --accent-glow: rgba(139, 0, 0, 0.02);
+  --text-primary: #1c1a17; /* High-contrast charcoal ink */
+  --text-muted: #4e3d30; /* Rich dark espresso sepia */
+  --border-color: rgba(139, 0, 0, 0.14); /* Subtle burgundy border rules */
+  --font-body: 'Lora', serif; /* Classic serif literature */
+  --font-display-font: 'Playfair Display', 'Lora', serif; /* Editorial titles */
   --font-code: 'monospace';
-  --card-radius: 4px; /* Fine elegant margins */
-  --theme-glow-style: 0 8px 24px -8px rgba(128, 0, 32, 0.06), 0 2px 8px -4px rgba(128, 0, 32, 0.04);
-  --glass-bg: rgba(244, 241, 234, 0.95);
-  --glass-border: rgba(128, 0, 32, 0.08);
+  --card-radius: 0px; /* Symmetrical linear margins */
+  --theme-glow-style: 0 6px 18px rgba(139, 0, 0, 0.03);
+  --glass-bg: rgba(244, 239, 227, 0.95);
+  --glass-border: rgba(139, 0, 0, 0.08);
+}
+
+/* Theme 5: Pure Zinc Monochrome (Dark Mode) */
+:root[data-theme="cyberpunk"] {
+  --bg-primary: #0c0c0e; /* Deep obsidian zinc */
+  --bg-secondary: #161619; /* High-contrast zinc panel */
+  --accent-primary: #ffffff; /* Minimalist pure white */
+  --accent-secondary: #71717a; /* Zinc gray */
+  --accent-glow: rgba(255, 255, 255, 0.05);
+  --text-primary: #ffffff;
+  --text-muted: #a1a1aa;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --font-body: 'Inter', sans-serif;
+  --font-display-font: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 4px; /* Clean geometric outlines */
+  --theme-glow-style: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --glass-bg: rgba(22, 22, 25, 0.95);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  letter-spacing: -0.01em;
 }
 
 /* ----------------------------------------------------
-   Base HTML Styling & Scrollbar Tuning
+   Core Document Styling & Resets
    ---------------------------------------------------- */
 * {
   box-sizing: border-box;
@@ -132,17 +132,18 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-}
-
-body {
-  font-family: var(--font-sans);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
   font-size: 15px;
-  line-height: 1.7; /* Standardized fluid body line height */
+  line-height: 1.8; /* Optimal fluid line height for relaxed reading */
+  transition: background-color 0.4s ease, color 0.3s ease;
 }
 
 #root {
@@ -154,20 +155,20 @@ body {
 }
 
 /* ----------------------------------------------------
-   Enforced Typography Pacing & Line Heights
+   Typography Alignments
    ---------------------------------------------------- */
 h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  line-height: 1.15; /* Perfectly balanced for massive headers */
-  letter-spacing: -0.03em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.25; /* Perfectly balanced for section headers */
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 h3, h4 {
@@ -176,102 +177,76 @@ h3, h4 {
   line-height: 1.35;
 }
 
-/* Enforce readability on descriptive body runs */
 p, li {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.7; /* Relaxed readability line height */
-  color: var(--text-primary);
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-muted);
 }
 
-span, label, input, textarea, button {
-  font-family: var(--font-sans);
-}
-
-/* Enforce monospace styling for code runs */
-code, pre, kbd, .font-mono {
+code, pre, .font-mono {
   font-family: var(--font-mono) !important;
 }
 
-::selection {
-  background-color: var(--accent-primary);
-  color: #ffffff;
-}
-
-/* Premium Responsive Scrollbar */
+/* Scrollbar Overhauls */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-primary);
 }
 
 /* ----------------------------------------------------
-   Strict Section Spacing & Boundaries
+   Strict Section Spacing & Heights
    ---------------------------------------------------- */
 section {
-  padding-top: 6rem;    /* 96px - uniform vertical spacing */
-  padding-bottom: 6rem; /* 96px */
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 
 @media (min-width: 768px) {
   section {
-    padding-top: 8rem;    /* 128px */
-    padding-bottom: 8rem; /* 128px */
+    padding-top: 8rem;
+    padding-bottom: 8rem;
   }
 }
 
 /* ----------------------------------------------------
-   Utility Classes & Custom Glassmorphism
+   Dynamic Glassmorphism panels & Orbs
    ---------------------------------------------------- */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--card-radius);
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Custom Grid Backgrounds */
 .theme-grid-overlay {
-  background-size: 32px 32px;
+  background-size: 40px 40px;
   background-image: 
     linear-gradient(to right, var(--border-color) 0.8px, transparent 0.8px),
     linear-gradient(to bottom, var(--border-color) 0.8px, transparent 0.8px);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 60%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 60%, transparent 100%);
-  opacity: 0.18;
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, #000 50%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, #000 50%, transparent 100%);
+  opacity: 0.15;
 }
 
 [data-theme="scandinavian"] .theme-grid-overlay {
   background-image: radial-gradient(var(--border-color) 1.2px, transparent 1.2px);
-  background-size: 20px 20px;
-  opacity: 0.22;
+  background-size: 24px 24px;
+  opacity: 0.2;
 }
 
-/* Floating Animation Keyframes */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-.floating-icon {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Typing Caret Animation */
+/* Caret Blinks */
 @keyframes blink {
   50% { border-color: transparent; }
 }
@@ -280,7 +255,7 @@ section {
   animation: blink 0.75s step-end infinite;
 }
 
-/* Hide scrollbar for clean visual containers */
+/* Scrollbar overrides */
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
@@ -289,12 +264,11 @@ section {
   scrollbar-width: none;
 }
 
-/* Printable PDF stylesheet formats */
+/* Printable PDF sheets formats */
 @media print {
   body {
     background: white !important;
     color: black !important;
-    font-size: 11px !important;
   }
   .no-print {
     display: none !important;

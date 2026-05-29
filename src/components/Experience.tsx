@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { experienceTimeline } from '../data/portfolioData';
 import { Briefcase, Calendar, ChevronDown, ChevronUp, CheckCircle, Sparkles, ShieldCheck } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
 interface CardProps {
   exp: typeof experienceTimeline[0];
@@ -119,6 +120,7 @@ const ExperienceCard: React.FC<CardProps> = ({ exp, idx }) => {
 };
 
 export const Experience: React.FC = () => {
+  const { t } = useI18n();
   return (
     <section id="experience" className="w-full py-20 px-4 sm:px-8 md:px-12 max-w-5xl mx-auto border-b border-border-custom relative select-none">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-52 h-52 bg-accent-glow blur-[130px] pointer-events-none rounded-full" />
@@ -126,13 +128,13 @@ export const Experience: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-20 space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-          <ShieldCheck size={11} className="animate-pulse" /> Track Record
+          <ShieldCheck size={11} className="animate-pulse" /> {t('experience.badge')}
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-          Career Timeline
+          {t('experience.title')}
         </h2>
         <p className="text-xs text-text-muted leading-relaxed">
-          Detailed log of corporate systems development. Click any heading block to collapse/expand task achievements.
+          {t('experience.desc')}
         </p>
       </div>
 

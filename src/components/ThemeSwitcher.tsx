@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Monitor, Sun, Moon, Laptop, Rocket, BookOpen } from 'lucide-react';
+import { Laptop, Sun, BookOpen, Moon, Compass } from 'lucide-react';
 
 interface ThemeOption {
   id: string;
@@ -14,32 +14,32 @@ export const ThemeSwitcher: React.FC = () => {
   const themes: ThemeOption[] = [
     {
       id: 'dark-dev',
-      name: 'Dark Dev',
+      name: 'Stark Slate',
       accentClass: 'bg-blue-500 border-blue-400',
       icon: <Laptop size={14} className="text-blue-400" />,
     },
     {
       id: 'enterprise',
-      name: 'Enterprise',
-      accentClass: 'bg-slate-800 border-slate-700',
-      icon: <Sun size={14} className="text-slate-800 dark:text-slate-200" />,
+      name: 'Nordic Frost',
+      accentClass: 'bg-sky-700 border-sky-600',
+      icon: <Sun size={14} className="text-sky-700 dark:text-sky-200" />,
     },
     {
       id: 'cyberpunk',
-      name: 'Cyberpunk',
-      accentClass: 'bg-pink-500 border-pink-400',
-      icon: <Rocket size={14} className="text-pink-500 animate-pulse" />,
+      name: 'Monochrome',
+      accentClass: 'bg-zinc-800 border-zinc-700',
+      icon: <Compass size={14} className="text-zinc-400" />,
     },
     {
       id: 'scandinavian',
-      name: 'Scandinavian',
-      accentClass: 'bg-[#607065] border-[#8fa095]',
-      icon: <Moon size={14} className="text-[#607065]" />,
+      name: 'Warm Sage',
+      accentClass: 'bg-[#5c677d] border-[#3a506b]',
+      icon: <Moon size={14} className="text-[#5c677d]" />,
     },
     {
       id: 'classical',
-      name: 'Classical',
-      accentClass: 'bg-[#800020] border-[#d0c9bc]',
+      name: 'Burgundy',
+      accentClass: 'bg-[#800020] border-[#f2eee3]',
       icon: <BookOpen size={14} className="text-[#800020]" />,
     },
   ];
@@ -62,10 +62,7 @@ export const ThemeSwitcher: React.FC = () => {
   };
 
   return (
-    <div className="no-print flex items-center bg-bg-secondary/80 border border-border-custom px-2 py-1.5 rounded-full shadow-sm max-w-fit">
-      <div className="hidden lg:flex items-center gap-1 text-[9px] uppercase tracking-wider font-extrabold text-text-muted px-2.5 select-none font-mono">
-        <Monitor size={10} className="text-text-muted" /> Theme
-      </div>
+    <div className="no-print flex items-center bg-bg-secondary/80 border border-border-custom px-2 py-1.5 rounded-full shadow-sm max-w-fit gap-1">
       <div className="flex gap-1">
         {themes.map((theme) => {
           const isActive = theme.id === activeTheme;

@@ -7,6 +7,8 @@ interface Particle {
   vy: number;
   size: number;
   color: string;
+  angle?: number;
+  speed?: number;
 }
 
 export const BackgroundParticles: React.FC = () => {
@@ -50,60 +52,67 @@ export const BackgroundParticles: React.FC = () => {
     const getThemeParams = (theme: string) => {
       switch (theme) {
         case 'enterprise':
+          // Nordic Frost
           return {
             count: 45,
-            minSpeed: 0.1,
-            maxSpeed: 0.4,
-            minSize: 1,
-            maxSize: 3,
-            colors: ['#0f172a', '#475569', '#cbd5e1'],
+            minSpeed: 0.08,
+            maxSpeed: 0.25,
+            minSize: 1.5,
+            maxSize: 3.5,
+            colors: ['rgba(29, 53, 87, 0.12)', 'rgba(69, 123, 157, 0.12)', 'rgba(168, 218, 220, 0.25)'],
             shape: 'circle',
-            connect: false,
+            connect: true,
+            connectColor: 'rgba(29, 53, 87, 0.05)',
           };
         case 'cyberpunk':
+          // Pure Zinc Monochrome
           return {
-            count: 70,
-            minSpeed: 1.0,
-            maxSpeed: 2.2,
-            minSize: 2,
-            maxSize: 5,
-            colors: ['#ff007f', '#00ffff', '#d946ef'],
+            count: 55,
+            minSpeed: 0.4,
+            maxSpeed: 1.2,
+            minSize: 1.5,
+            maxSize: 4.5,
+            colors: ['rgba(255, 255, 255, 0.09)', 'rgba(161, 161, 170, 0.1)', 'rgba(63, 63, 70, 0.12)'],
             shape: 'square',
             connect: false,
           };
         case 'scandinavian':
+          // Warm Sage
           return {
-            count: 25,
-            minSpeed: 0.05,
-            maxSpeed: 0.2,
-            minSize: 6,
-            maxSize: 18,
-            colors: ['#8fa095', '#607065', '#d1cfc7', '#eceae3'],
+            count: 12,
+            minSpeed: 0.03,
+            maxSpeed: 0.1,
+            minSize: 30,
+            maxSize: 85,
+            colors: ['rgba(92, 103, 125, 0.03)', 'rgba(58, 80, 107, 0.03)', 'rgba(143, 160, 149, 0.03)'],
             shape: 'bubble',
             connect: false,
           };
         case 'classical':
+          // Editorial Burgundy
           return {
             count: 35,
-            minSpeed: 0.04,
-            maxSpeed: 0.12,
+            minSpeed: 0.02,
+            maxSpeed: 0.08,
             minSize: 1,
             maxSize: 3.2,
-            colors: ['#800020', '#3d503f', '#d0c9bc', '#5e564d'],
-            shape: 'circle',
+            colors: ['rgba(128, 0, 32, 0.06)', 'rgba(40, 54, 24, 0.05)', 'rgba(94, 86, 77, 0.06)'],
+            shape: 'charcoal',
             connect: false,
           };
         case 'dark-dev':
         default:
+          // Stark Slate
           return {
-            count: 60,
-            minSpeed: 0.2,
-            maxSpeed: 0.6,
+            count: 50,
+            minSpeed: 0.1,
+            maxSpeed: 0.35,
             minSize: 1.5,
-            maxSize: 4,
-            colors: ['#3b82f6', '#8b5cf6', '#a78bfa', '#1d4ed8'],
+            maxSize: 3.8,
+            colors: ['rgba(59, 130, 246, 0.15)', 'rgba(99, 102, 241, 0.15)', 'rgba(255, 255, 255, 0.06)'],
             shape: 'circle',
             connect: true,
+            connectColor: 'rgba(59, 130, 246, 0.06)',
           };
       }
     };
@@ -115,16 +124,15 @@ export const BackgroundParticles: React.FC = () => {
         const size = Math.random() * (params.maxSize - params.minSize) + params.minSize;
         const color = params.colors[Math.floor(Math.random() * params.colors.length)];
         
-        // Cyberpunk particles drift upward, Enterprise flows rightward, Dev drifts randomly
         let vx = 0;
         let vy = 0;
         
         if (themeRef.current === 'cyberpunk') {
-          vx = (Math.random() - 0.5) * 0.4;
-          vy = -(Math.random() * (params.maxSpeed - params.minSpeed) + params.minSpeed);
-        } else if (themeRef.current === 'enterprise') {
-          vx = Math.random() * (params.maxSpeed - params.minSpeed) + params.minSpeed;
-          vy = (Math.random() - 0.5) * 0.15;
+          vx = (Math.random() - 0.5) * 0.15;
+          vy = -(Math.random() * (params.maxSpeed - params.minSpeed) + params.minSpeed); // slide upward
+        } else if (themeRef.current === 'classical') {
+          vx = (Math.random() - 0.5) * 0.03;
+          vy = Math.random() * (params.maxSpeed - params.minSpeed) + params.minSpeed; // drift downward
         } else {
           vx = (Math.random() - 0.5) * (params.maxSpeed - params.minSpeed) * 2;
           vy = (Math.random() - 0.5) * (params.maxSpeed - params.minSpeed) * 2;
@@ -137,13 +145,14 @@ export const BackgroundParticles: React.FC = () => {
           vy,
           size,
           color,
+          angle: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.005 + 0.001
         });
       }
     };
 
     createParticles();
 
-    // Reinitialize particles on theme change
     let currentTheme = themeRef.current;
 
     const handleResize = () => {
@@ -162,32 +171,19 @@ export const BackgroundParticles: React.FC = () => {
 
       const params = getThemeParams(themeRef.current);
 
-      // Clear or fade background
-      if (themeRef.current === 'cyberpunk') {
-        // Leave tiny trail for neon glow effect
-        ctx.fillStyle = 'rgba(11, 2, 20, 0.2)';
-        ctx.fillRect(0, 0, width, height);
-      } else if (themeRef.current === 'scandinavian' || themeRef.current === 'classical') {
-        ctx.clearRect(0, 0, width, height);
-      } else if (themeRef.current === 'enterprise') {
-        ctx.clearRect(0, 0, width, height);
-      } else {
-        // Dark developer
-        ctx.clearRect(0, 0, width, height);
-      }
+      ctx.clearRect(0, 0, width, height);
 
-      // Draw connections first (for Dark Dev mode)
+      // Draw network connections first
       if (params.connect) {
         ctx.lineWidth = 0.5;
+        ctx.strokeStyle = params.connectColor || 'rgba(255,255,255,0.05)';
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
             const dy = particles[i].y - particles[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < 120) {
-              const alpha = (1 - dist / 120) * 0.15;
-              ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+            if (dist < 130) {
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
@@ -199,51 +195,43 @@ export const BackgroundParticles: React.FC = () => {
 
       // Update and draw particles
       particles.forEach((p) => {
-        // Update positions
         p.x += p.vx;
         p.y += p.vy;
 
-        // Boundaries check
+        // Classical Brownian wave drifting
+        if (themeRef.current === 'classical') {
+          p.angle = (p.angle || 0) + (p.speed || 0.002);
+          p.x += Math.sin(p.angle) * 0.15;
+        }
+
+        // Boundary wraps
         if (themeRef.current === 'cyberpunk') {
           if (p.y < -10) {
             p.y = height + 10;
             p.x = Math.random() * width;
           }
-          if (p.x < -10 || p.x > width + 10) {
-            p.vx *= -1;
+          if (p.x < -10 || p.x > width + 10) p.vx *= -1;
+        } else if (themeRef.current === 'classical') {
+          if (p.y > height + 10) {
+            p.y = -10;
+            p.x = Math.random() * width;
           }
-        } else if (themeRef.current === 'enterprise') {
-          if (p.x > width + 10) {
-            p.x = -10;
-            p.y = Math.random() * height;
-          }
-          if (p.y < -10 || p.y > height + 10) {
-            p.vy *= -1;
-          }
+          if (p.x < -10 || p.x > width + 10) p.vx *= -1;
         } else {
-          // Wrap around or bounce
           if (p.x < 0 || p.x > width) p.vx *= -1;
           if (p.y < 0 || p.y > height) p.vy *= -1;
         }
 
-        // Draw particle
+        // Draw visual shape
         ctx.beginPath();
         if (params.shape === 'square') {
           ctx.fillStyle = p.color;
-          // Glow effect for cyberpunk squares
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = p.color;
           ctx.fillRect(p.x, p.y, p.size, p.size);
-          ctx.shadowBlur = 0; // reset
         } else if (params.shape === 'bubble') {
-          // Large transparent circles
           ctx.fillStyle = p.color;
-          ctx.globalAlpha = 0.08;
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fill();
-          ctx.globalAlpha = 1.0; // reset
         } else {
-          // Standard circle
           ctx.fillStyle = p.color;
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fill();

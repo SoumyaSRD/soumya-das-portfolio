@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { Mail, MapPin, Linkedin, Send, FileDown, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
 export const Contact: React.FC = () => {
+  const { t } = useI18n();
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSending, setIsSending] = useState<boolean>(false);
   const [isSent, setIsSent] = useState<boolean>(false);
@@ -51,9 +53,11 @@ export const Contact: React.FC = () => {
     setTimeout(() => {
       setBookingConfirmed(false);
       setShowBookingModal(false);
+      const date = selectedDate;
+      const time = selectedTime;
       setSelectedDate('');
       setSelectedTime('');
-      alert('Recruiter interview calendar slot successfully scheduled! Soumya will receive a calendar invite automatically.');
+      alert(`${t('contact.booking.confirm')} ${date} @ ${time}`);
     }, 1500);
   };
 
@@ -64,13 +68,13 @@ export const Contact: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-primary/10 rounded-full text-[10px] font-bold tracking-widest text-accent-primary uppercase font-mono">
-          <Mail size={11} className="animate-pulse" /> Communications Hub
+          <Mail size={11} className="animate-pulse" /> {t('contact.title')}
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-text-primary uppercase">
-          Get In Touch
+          {t('contact.badge')}
         </h2>
         <p className="text-xs text-text-muted leading-relaxed">
-          Hire Soumya for your elite squad, request custom consultancy, or schedule a calendar brief interview slot instantly.
+          {t('contact.desc')}
         </p>
       </div>
 
@@ -82,8 +86,8 @@ export const Contact: React.FC = () => {
             <MapPin size={18} />
           </div>
           <div>
-            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">Location Hub</h4>
-            <p className="text-text-muted mt-1 text-xs">{personalInfo.location}</p>
+            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">Location</h4>
+            <p className="text-text-muted mt-1 text-xs">{t('contact.card.location')}</p>
           </div>
         </div>
 
@@ -93,7 +97,7 @@ export const Contact: React.FC = () => {
             <Mail size={18} />
           </div>
           <div>
-            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">Direct Email</h4>
+            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">{t('contact.card.email')}</h4>
             <a href={`mailto:${personalInfo.email}`} className="text-text-muted hover:text-accent-primary transition-colors mt-1 block text-xs">
               {personalInfo.email}
             </a>
@@ -106,7 +110,7 @@ export const Contact: React.FC = () => {
             <Linkedin size={18} />
           </div>
           <div>
-            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">Professional Network</h4>
+            <h4 className="font-bold text-text-primary uppercase tracking-wider text-[10px] font-mono">{t('contact.card.linkedin')}</h4>
             <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-accent-primary transition-colors mt-1 block text-xs">
               {personalInfo.linkedin}
             </a>
@@ -121,14 +125,14 @@ export const Contact: React.FC = () => {
           className="flex-1 px-5 py-3.5 border border-accent-primary hover:bg-accent-primary hover:text-white text-accent-primary rounded-xl font-bold uppercase tracking-wider text-[10px] flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-103 active:scale-97 shadow-sm"
           style={{ boxShadow: 'var(--theme-glow-style)' }}
         >
-          <Calendar size={13} /> Schedule Interview Slot
+          <Calendar size={13} /> {t('hero.cta.book')}
         </button>
 
         <button
           onClick={() => window.print()}
           className="flex-1 px-5 py-3.5 bg-bg-secondary hover:bg-border-custom border border-border-custom text-text-primary rounded-xl font-bold uppercase tracking-wider text-[10px] flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-103 active:scale-97 shadow-sm"
         >
-          <FileDown size={13} /> Download PDF Resume / CV
+          <FileDown size={13} /> {t('hero.cta.cv')}
         </button>
       </div>
 
@@ -141,14 +145,14 @@ export const Contact: React.FC = () => {
         }}
       >
         <h3 className="text-base sm:text-lg font-bold text-text-primary uppercase tracking-wide text-center mb-6">
-          Send a Secure Message
+          {t('contact.badge')}
         </h3>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Name */}
             <div className="space-y-1.5">
-              <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Your Name</label>
+              <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">{t('contact.form.name')}</label>
               <input
                 type="text"
                 name="name"
@@ -162,7 +166,7 @@ export const Contact: React.FC = () => {
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Email Address</label>
+              <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">{t('contact.form.email')}</label>
               <input
                 type="email"
                 name="email"
@@ -177,7 +181,7 @@ export const Contact: React.FC = () => {
 
           {/* Message */}
           <div className="space-y-1.5">
-            <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Message Content</label>
+            <label className="text-[9px] font-bold text-text-muted uppercase tracking-wider">{t('contact.form.message')}</label>
             <textarea
               name="message"
               value={formState.message}
@@ -192,7 +196,7 @@ export const Contact: React.FC = () => {
           {/* Send Status Indicator Notifications */}
           {isSent && (
             <div className="p-3 border border-emerald-500/30 bg-emerald-500/10 rounded-lg text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200">
-              <CheckCircle size={14} /> Message securely transmitted! Soumya will follow up shortly.
+              <CheckCircle size={14} /> {t('contact.form.success')}
             </div>
           )}
 
@@ -210,7 +214,7 @@ export const Contact: React.FC = () => {
               </>
             ) : (
               <>
-                <Send size={12} /> Transmit Message
+                <Send size={12} /> {t('contact.form.send')}
               </>
             )}
           </button>
@@ -233,7 +237,7 @@ export const Contact: React.FC = () => {
             <div className="bg-bg-secondary border-b border-border-custom px-5 py-4 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Calendar className="text-accent-primary animate-pulse" size={16} />
-                <h3 className="text-xs font-bold text-text-primary tracking-wider uppercase">Book Interview Slot</h3>
+                <h3 className="text-xs font-bold text-text-primary tracking-wider uppercase">{t('contact.booking.title')}</h3>
               </div>
               <button
                 onClick={() => setShowBookingModal(false)}
@@ -271,7 +275,7 @@ export const Contact: React.FC = () => {
               {/* Step 2: Select Time */}
               <div className="space-y-2">
                 <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                  <Clock size={10} className="text-accent-primary animate-pulse" /> Step 2: Select Time Slot (IST)
+                  <Clock size={10} className="text-accent-primary animate-pulse" /> Step 2: {t('contact.booking.time')} (IST)
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {availableSlots.map((time) => (
