@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syncopate:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+/* ----------------------------------------------------
+   Tailwind CSS v4.0 Custom Theme Settings
+   ---------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-body), 'Inter', sans-serif;
+  --font-display: var(--font-display-font), var(--font-body), 'Inter', sans-serif;
+  --font-mono: var(--font-code), 'JetBrains Mono', monospace;
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-border-custom: var(--border-color);
+}
+
+/* ----------------------------------------------------
+   Theme Systems Configuration (CSS Variables)
+   ---------------------------------------------------- */
+
+/* 1. Dark Developer Theme (Default) */
+:root, :root[data-theme="dark-dev"] {
+  --bg-primary: #050508;
+  --bg-secondary: #0c0d12;
+  --accent-primary: #3b82f6; /* Neon Blue */
+  --accent-secondary: #8b5cf6; /* Cyber Purple */
+  --accent-glow: rgba(59, 130, 246, 0.1);
+  --text-primary: #f8fafc;
+  --text-muted: #cbd5e1;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --font-body: 'Inter', sans-serif;
+  --font-display-font: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 12px;
+  --theme-glow-style: 0 0 30px rgba(59, 130, 246, 0.08), 0 8px 32px rgba(5, 5, 8, 0.4);
+  --glass-bg: rgba(12, 13, 18, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+/* 2. Enterprise Professional Theme */
+:root[data-theme="enterprise"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --accent-primary: #0f172a; /* Sophisticated Slate */
+  --accent-secondary: #334155;
+  --accent-glow: rgba(15, 23, 42, 0.03);
+  --text-primary: #0f172a;
+  --text-muted: #475569;
+  --border-color: rgba(15, 23, 42, 0.08);
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-display-font: 'Plus Jakarta Sans', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 8px;
+  --theme-glow-style: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 16px -6px rgba(15, 23, 42, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(15, 23, 42, 0.06);
+}
+
+/* 3. Cyberpunk Futuristic Theme */
+:root[data-theme="cyberpunk"] {
+  --bg-primary: #090212;
+  --bg-secondary: #120324;
+  --accent-primary: #ff007f; /* Neon Hot Pink */
+  --accent-secondary: #00ffff; /* Neon Cyan */
+  --accent-glow: rgba(255, 0, 127, 0.25);
+  --text-primary: #ffffff;
+  --text-muted: #f472b6;
+  --border-color: rgba(255, 0, 127, 0.4);
+  --font-body: 'Inter', sans-serif; /* Readable sans for body content */
+  --font-display-font: 'Syncopate', sans-serif; /* Wide cyberpunk font ONLY for large headers */
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 0px;
+  --theme-glow-style: 0 0 25px rgba(255, 0, 127, 0.25), 0 4px 12px rgba(0, 255, 255, 0.15);
+  --glass-bg: rgba(18, 3, 36, 0.9);
+  --glass-border: rgba(255, 0, 127, 0.25);
+}
+
+/* 4. Minimal Scandinavian Theme */
+:root[data-theme="scandinavian"] {
+  --bg-primary: #f5f4f0;
+  --bg-secondary: #e9e7df;
+  --accent-primary: #232c27;
+  --accent-secondary: #48564e;
+  --accent-glow: rgba(35, 44, 39, 0.04);
+  --text-primary: #121815;
+  --text-muted: #4e5952;
+  --border-color: rgba(35, 44, 39, 0.12);
+  --font-body: 'Outfit', sans-serif;
+  --font-display-font: 'Outfit', sans-serif;
+  --font-code: 'monospace';
+  --card-radius: 20px;
+  --theme-glow-style: 0 12px 30px -10px rgba(35, 44, 39, 0.06), 0 4px 12px -5px rgba(35, 44, 39, 0.03);
+  --glass-bg: rgba(233, 231, 223, 0.85);
+  --glass-border: rgba(35, 44, 39, 0.08);
+}
+
+/* 5. Classical Editorial Theme */
+:root[data-theme="classical"] {
+  --bg-primary: #fdfcf7; /* Premium aged parchment cream */
+  --bg-secondary: #f4f1ea; /* Soft warm stone */
+  --accent-primary: #800020; /* Royal Burgundy / Bordeaux Red */
+  --accent-secondary: #3d503f; /* Deep Scholarly Sage Green */
+  --accent-glow: rgba(128, 0, 32, 0.02);
+  --text-primary: #1c1a17; /* High-contrast charcoal sepia */
+  --text-muted: #5e564d; /* Muted stone brown-charcoal */
+  --border-color: rgba(128, 0, 32, 0.12); /* Subtle burgundy lines */
+  --font-body: 'Lora', serif; /* Elegant classical serif body text */
+  --font-display-font: 'Playfair Display', 'Lora', serif; /* Traditional editorial headings */
+  --font-code: 'monospace';
+  --card-radius: 4px; /* Fine elegant margins */
+  --theme-glow-style: 0 8px 24px -8px rgba(128, 0, 32, 0.06), 0 2px 8px -4px rgba(128, 0, 32, 0.04);
+  --glass-bg: rgba(244, 241, 234, 0.95);
+  --glass-border: rgba(128, 0, 32, 0.08);
+}
+
+/* ----------------------------------------------------
+   Base HTML Styling & Scrollbar Tuning
+   ---------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.7; /* Standardized fluid body line height */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ----------------------------------------------------
+   Enforced Typography Pacing & Line Heights
+   ---------------------------------------------------- */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.15; /* Perfectly balanced for massive headers */
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.25; /* Perfectly balanced for section headers */
+  letter-spacing: -0.02em;
+}
+
+h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Enforce readability on descriptive body runs */
+p, li {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.7; /* Relaxed readability line height */
+  color: var(--text-primary);
+}
+
+span, label, input, textarea, button {
+  font-family: var(--font-sans);
+}
+
+/* Enforce monospace styling for code runs */
+code, pre, kbd, .font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+::selection {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Premium Responsive Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* ----------------------------------------------------
+   Strict Section Spacing & Boundaries
+   ---------------------------------------------------- */
+section {
+  padding-top: 6rem;    /* 96px - uniform vertical spacing */
+  padding-bottom: 6rem; /* 96px */
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-top: 8rem;    /* 128px */
+    padding-bottom: 8rem; /* 128px */
+  }
+}
+
+/* ----------------------------------------------------
+   Utility Classes & Custom Glassmorphism
+   ---------------------------------------------------- */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* Custom Grid Backgrounds */
+.theme-grid-overlay {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, var(--border-color) 0.8px, transparent 0.8px),
+    linear-gradient(to bottom, var(--border-color) 0.8px, transparent 0.8px);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 60%, transparent 100%);
+  opacity: 0.18;
+}
+
+[data-theme="scandinavian"] .theme-grid-overlay {
+  background-image: radial-gradient(var(--border-color) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  opacity: 0.22;
+}
+
+/* Floating Animation Keyframes */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating-icon {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Typing Caret Animation */
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+.typing-caret {
+  border-right: 3px solid var(--accent-primary);
+  animation: blink 0.75s step-end infinite;
+}
+
+/* Hide scrollbar for clean visual containers */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Printable PDF stylesheet formats */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11px !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
