@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, Bot, Trash2 } from 'lucide-react';
+import { MessageSquare, X, Send, Bot, Trash2, Sparkles, CheckCircle } from 'lucide-react';
 import { simulatedChatBotResponses } from '../data/portfolioData';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
   sender: 'user' | 'bot';
   text: string;
   timestamp: Date;
+  isVerified?: boolean;
 }
 
 export const ChatBot: React.FC = () => {
@@ -15,6 +17,7 @@ export const ChatBot: React.FC = () => {
       sender: 'bot',
       text: `Hello! I am Soumya's portfolio AI assistant. I can answer questions about his 7+ years of experience, Angular & React craftsmanship, and NestJS backends. What would you like to know?`,
       timestamp: new Date(),
+      isVerified: true
     },
   ]);
   const [inputVal, setInputVal] = useState<string>('');
@@ -22,12 +25,11 @@ export const ChatBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLInputElement>(null);
 
-  // Quick suggestion prompts
   const suggestions = [
-    { label: '💼 Core Experience', query: 'experience' },
-    { label: '🛡️ Code Quality', query: 'quality' },
+    { label: '💼 Experience', query: 'experience' },
+    { label: '🛡️ Quality', query: 'quality' },
     { label: '🛠️ Tech Stack', query: 'angular' },
-    { label: '📞 Contact Details', query: 'contact' },
+    { label: '📞 Contact', query: 'contact' },
   ];
 
   useEffect(() => {
@@ -37,14 +39,13 @@ export const ChatBot: React.FC = () => {
   const toggleChat = () => {
     setIsOpen(!isOpen);
     if (!isOpen) {
-      setTimeout(() => chatInputRef.current?.focus(), 150);
+      setTimeout(() => chatInputRef.current?.focus(), 300);
     }
   };
 
   const handleSendMessage = (textToSend: string) => {
     if (!textToSend.trim()) return;
 
-    // Add user message
     const userMsg: Message = {
       sender: 'user',
       text: textToSend,
@@ -55,7 +56,6 @@ export const ChatBot: React.FC = () => {
     setInputVal('');
     setIsTyping(true);
 
-    // AI logic (Keyword parsing)
     setTimeout(() => {
       const normalizedQuery = textToSend.toLowerCase();
       let responseText = simulatedChatBotResponses.default;
@@ -84,10 +84,11 @@ export const ChatBot: React.FC = () => {
           sender: 'bot',
           text: responseText,
           timestamp: new Date(),
+          isVerified: true
         },
       ]);
       setIsTyping(false);
-    }, 850);
+    }, 1200);
   };
 
   const clearChat = () => {
@@ -96,155 +97,175 @@ export const ChatBot: React.FC = () => {
         sender: 'bot',
         text: `Chat cleared! What other details about Soumya's professional background can I fetch for you?`,
         timestamp: new Date(),
+        isVerified: true
       },
     ]);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 no-print font-sans">
-      {/* 1. Floating Action Icon Button */}
-      {!isOpen && (
-        <button
-          onClick={toggleChat}
-          className="w-14 h-14 rounded-full bg-accent-primary text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all cursor-pointer relative group border border-border-custom"
-          style={{ boxShadow: 'var(--theme-glow-style)' }}
-        >
-          <MessageSquare size={22} className="animate-pulse" />
-          <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-secondary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-secondary"></span>
-          </span>
-          {/* Tooltip */}
-          <div className="absolute right-16 bg-bg-secondary text-text-primary border border-border-custom px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">
-            Ask Soumya's AI Agent
-          </div>
-        </button>
-      )}
+    <div className="fixed bottom-6 right-6 z-50 no-print font-sans">
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleChat}
+            className="w-14 h-14 rounded-full bg-gradient-to-tr from-accent-primary to-accent-secondary text-white flex items-center justify-center shadow-xl cursor-pointer relative group border border-white/20"
+          >
+            <MessageSquare size={22} />
+            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-secondary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-secondary"></span>
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
-      {/* 2. Expanded Chatbot Window */}
-      {isOpen && (
-        <div
-          className="w-[calc(100vw-32px)] sm:w-[350px] md:w-[400px] h-[500px] glass-panel flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300"
-          style={{
-            boxShadow: 'var(--theme-glow-style)',
-          }}
-        >
-          {/* Header */}
-          <div className="bg-bg-secondary border-b border-border-custom px-4 py-4 flex justify-between items-center select-none">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-accent-primary/20 flex items-center justify-center border border-accent-primary/30">
-                <Bot size={18} className="text-accent-primary" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-text-primary tracking-wider uppercase">Soumya AI Agent</h3>
-                <p className="text-[10px] text-text-muted flex items-center gap-1">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                  Ready to answer recruiter Qs
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={clearChat}
-                className="text-text-muted hover:text-red-500 transition-colors p-1 rounded hover:bg-white/5 cursor-pointer"
-                title="Clear Chat History"
-              >
-                <Trash2 size={14} />
-              </button>
-              <button
-                onClick={toggleChat}
-                className="text-text-muted hover:text-text-primary transition-colors p-1 rounded hover:bg-white/5 cursor-pointer"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          </div>
-
-          {/* Messages Thread */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-bg-primary/45">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex gap-2.5 max-w-[85%] ${
-                  msg.sender === 'user' ? 'ml-auto flex-row-reverse' : 'mr-auto'
-                }`}
-              >
-                {msg.sender === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-accent-secondary/15 border border-accent-secondary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Bot size={12} className="text-accent-secondary" />
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 100, x: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 100, x: 50 }}
+            className="w-[calc(100vw-32px)] sm:w-[380px] h-[550px] glass-panel flex flex-col overflow-hidden shadow-2xl origin-bottom-right"
+            style={{
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            {/* Header */}
+            <div className="bg-bg-secondary/80 backdrop-blur-md border-b border-border-custom px-5 py-4 flex justify-between items-center select-none">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-full bg-accent-primary/20 flex items-center justify-center border border-accent-primary/30">
+                    <Bot size={20} className="text-accent-primary" />
                   </div>
-                )}
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-bg-secondary rounded-full"></span>
+                </div>
                 <div>
-                  <div
-                    className={`p-3 text-xs leading-relaxed ${
-                      msg.sender === 'user'
-                        ? 'bg-accent-primary text-white rounded-2xl rounded-tr-none'
-                        : 'bg-bg-secondary border border-border-custom text-text-primary rounded-2xl rounded-tl-none shadow-sm'
-                    }`}
-                  >
-                    {msg.text}
+                  <h3 className="text-xs font-black text-text-primary tracking-tight uppercase flex items-center gap-1.5">
+                    Soumya's Agent <Sparkles size={12} className="text-amber-400" />
+                  </h3>
+                  <p className="text-[10px] text-text-muted font-mono tracking-wider">
+                    AI POWERED ASSISTANT
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={clearChat}
+                  className="p-2 text-text-muted hover:text-red-500 hover:bg-red-500/10 transition-all rounded-lg cursor-pointer"
+                  title="Clear Chat"
+                >
+                  <Trash2 size={16} />
+                </button>
+                <button
+                  onClick={toggleChat}
+                  className="p-2 text-text-muted hover:text-text-primary hover:bg-white/10 transition-all rounded-lg cursor-pointer"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-gradient-to-b from-bg-primary/50 to-bg-secondary/30">
+              {messages.map((msg, index) => (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, x: msg.sender === 'user' ? 20 : -20 }}
+                  animate={{ opacity: 1, y: 0, x: 0 }}
+                  key={index}
+                  className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
+                >
+                  <div className={`flex gap-2.5 max-w-[90%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                    {msg.sender === 'bot' && (
+                      <div className="w-6 h-6 rounded-full bg-accent-primary/10 border border-accent-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Bot size={12} className="text-accent-primary" />
+                      </div>
+                    )}
+                    <div
+                      className={`px-4 py-3 rounded-2xl text-[12.5px] leading-relaxed shadow-sm ${
+                        msg.sender === 'user'
+                          ? 'bg-gradient-to-br from-accent-primary to-accent-secondary text-white rounded-tr-none'
+                          : 'bg-bg-secondary border border-border-custom text-text-primary rounded-tl-none'
+                      }`}
+                    >
+                      {msg.text}
+                      {msg.isVerified && msg.sender === 'bot' && (
+                        <div className="flex items-center gap-1 mt-2 pt-2 border-t border-border-custom/50 text-[9px] font-bold text-accent-primary uppercase tracking-widest">
+                          <CheckCircle size={10} /> Verified Experience Data
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <span className="text-[9px] text-text-muted px-1.5 mt-1 block">
+                  <span className="text-[9px] text-text-muted mt-1.5 px-1 font-mono">
                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
 
-            {isTyping && (
-              <div className="flex gap-2.5 mr-auto max-w-[80%]">
-                <div className="w-6 h-6 rounded-full bg-accent-secondary/15 border border-accent-secondary/20 flex items-center justify-center flex-shrink-0 mt-0.5 animate-bounce">
-                  <Bot size={12} className="text-accent-secondary" />
-                </div>
-                <div className="bg-bg-secondary border border-border-custom p-3 rounded-2xl rounded-tl-none flex items-center gap-1 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-secondary animate-bounce"></span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-secondary animate-bounce [animation-delay:0.2s]"></span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-secondary animate-bounce [animation-delay:0.4s]"></span>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+              {isTyping && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex gap-2.5 items-center"
+                >
+                  <div className="w-6 h-6 rounded-full bg-accent-primary/10 border border-accent-primary/20 flex items-center justify-center">
+                    <Bot size={12} className="text-accent-primary" />
+                  </div>
+                  <div className="flex gap-1">
+                    <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 rounded-full bg-accent-primary"></motion.span>
+                    <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-accent-primary"></motion.span>
+                    <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-accent-primary"></motion.span>
+                  </div>
+                </motion.div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
 
-          {/* Quick Pill Prompts */}
-          <div className="px-4 py-2 border-t border-border-custom flex gap-2 overflow-x-auto whitespace-nowrap bg-bg-secondary/40 select-none scrollbar-none">
-            {suggestions.map((pill, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSendMessage(pill.label.substring(4))}
-                className="px-2.5 py-1 text-[10px] font-medium bg-bg-secondary hover:bg-accent-primary hover:text-white text-text-primary border border-border-custom rounded-full transition-all cursor-pointer shadow-sm flex-shrink-0"
-              >
-                {pill.label}
-              </button>
-            ))}
-          </div>
+            {/* Suggestions */}
+            <div className="px-5 py-3 border-t border-border-custom flex gap-2 overflow-x-auto whitespace-nowrap bg-bg-secondary/20 scrollbar-none">
+              {suggestions.map((pill, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSendMessage(pill.label.substring(2))}
+                  className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-bg-primary hover:bg-accent-primary hover:text-white text-text-primary border border-border-custom rounded-full transition-all cursor-pointer shadow-sm flex-shrink-0 font-mono"
+                >
+                  {pill.label}
+                </button>
+              ))}
+            </div>
 
-          {/* Input Footer */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSendMessage(inputVal);
-            }}
-            className="p-3 border-t border-border-custom flex items-center gap-2 bg-bg-secondary"
-          >
-            <input
-              ref={chatInputRef}
-              type="text"
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              className="flex-1 bg-bg-primary border border-border-custom focus:border-accent-primary outline-none text-xs rounded-xl px-3.5 py-2.5 text-text-primary focus:ring-1 focus:ring-accent-primary"
-              placeholder="Ask me something..."
-            />
-            <button
-              type="submit"
-              disabled={!inputVal.trim()}
-              className="w-9 h-9 rounded-xl bg-accent-primary text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-all cursor-pointer border border-border-custom"
+            {/* Footer */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSendMessage(inputVal);
+              }}
+              className="p-4 border-t border-border-custom bg-bg-secondary flex gap-2"
             >
-              <Send size={14} />
-            </button>
-          </form>
-        </div>
-      )}
+              <input
+                ref={chatInputRef}
+                type="text"
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
+                className="flex-1 bg-bg-primary border border-border-custom focus:border-accent-primary outline-none text-xs rounded-xl px-4 py-3 text-text-primary transition-all placeholder:text-text-muted/50"
+                placeholder="Type a message..."
+              />
+              <button
+                type="submit"
+                disabled={!inputVal.trim() || isTyping}
+                className="w-11 h-11 rounded-xl bg-gradient-to-tr from-accent-primary to-accent-secondary text-white flex items-center justify-center disabled:opacity-40 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent-primary/20"
+              >
+                <Send size={18} />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+

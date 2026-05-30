@@ -13,9 +13,13 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined);
 export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('srd-portfolio-lang');
-      if (saved && (saved === 'en' || saved === 'hi' || saved === 'fr' || saved === 'ja' || saved === 'or')) {
-        return saved as Language;
+      try {
+        const saved = localStorage.getItem('srd-portfolio-lang');
+        if (saved && (saved === 'en' || saved === 'hi' || saved === 'fr' || saved === 'ja' || saved === 'or')) {
+          return saved as Language;
+        }
+      } catch (e) {
+        console.warn('LocalStorage not available', e);
       }
     }
     return 'en';

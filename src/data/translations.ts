@@ -17,6 +17,8 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.showroom': 'Showroom',
     'nav.interests': 'Interests',
     'nav.blog': 'Blog',
+    'nav.github': 'GitHub',
+    'nav.testimonials': 'Testimonials',
     'nav.contact': 'Contact',
     'nav.brand': 'srd.OS',
 
@@ -76,6 +78,16 @@ export const translations: Record<Language, Record<string, string>> = {
     'blog.title': 'Technical Blog Pinned',
     'blog.desc': 'Sharing software engineering and system architecture thinking from years of code delivery.',
 
+    // Testimonials Section
+    'testimonials.badge': 'What People Say',
+    'testimonials.title': 'Peer Recommendations',
+    'testimonials.desc': 'Feedback from colleagues and mentors I\'ve collaborated with on enterprise-scale projects.',
+
+    // GitHub Section
+    'github.badge': 'Live Activity',
+    'github.title': 'GitHub Pulse',
+    'github.desc': 'Real-time statistics fetched directly from my GitHub profile via REST APIs.',
+
     // Contact Section
     'contact.badge': 'Get In Touch',
     'contact.title': 'Communications Hub',
@@ -103,6 +115,8 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.showroom': 'शो रूम',
     'nav.interests': 'रुचियाँ',
     'nav.blog': 'ब्लॉग',
+    'nav.github': 'गिटहब',
+    'nav.testimonials': 'प्रशंसापत्र',
     'nav.contact': 'संपर्क',
     'nav.brand': 'srd.OS',
 
@@ -189,6 +203,8 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.showroom': 'Projets',
     'nav.interests': 'Intérêts',
     'nav.blog': 'Blog',
+    'nav.github': 'GitHub',
+    'nav.testimonials': 'Testimonials',
     'nav.contact': 'Contact',
     'nav.brand': 'srd.OS',
 
@@ -275,6 +291,8 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.showroom': 'プロジェクト',
     'nav.interests': '興味・関心',
     'nav.blog': 'ブログ',
+    'nav.github': 'GitHub',
+    'nav.testimonials': '推薦の声',
     'nav.contact': 'お問い合わせ',
     'nav.brand': 'srd.OS',
 
@@ -361,6 +379,8 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.showroom': 'ପ୍ରକଳ୍ପ',
     'nav.interests': 'ରୁଚି',
     'nav.blog': 'ବ୍ଲଗ୍',
+    'nav.github': 'GitHub',
+    'nav.testimonials': 'ପ୍ରଶଂସାପତ୍ର',
     'nav.contact': 'ଯୋଗାଯୋଗ',
     'nav.brand': 'srd.OS',
 

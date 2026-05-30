@@ -124,8 +124,8 @@ export const BackgroundParticles: React.FC = () => {
         const size = Math.random() * (params.maxSize - params.minSize) + params.minSize;
         const color = params.colors[Math.floor(Math.random() * params.colors.length)];
         
-        let vx = 0;
-        let vy = 0;
+        let vx: number;
+        let vy: number;
         
         if (themeRef.current === 'cyberpunk') {
           vx = (Math.random() - 0.5) * 0.15;

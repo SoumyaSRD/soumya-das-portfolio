@@ -22,12 +22,23 @@ export interface Project {
   title: string;
   tech: string[];
   description: string;
+  longDescription?: string;
+  features?: string[];
+  imageUrl?: string;
   githubUrl: string;
   demoUrl?: string;
   category: 'enterprise' | 'healthcare' | 'ecommerce' | 'learning';
   stars?: number;
   forks?: number;
   featured?: boolean;
+}
+
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  content: string;
+  avatar?: string;
 }
 
 export interface Certification {
@@ -156,6 +167,15 @@ export const suggestedProjects: Project[] = [
     title: 'Transport Management System ("20High")',
     tech: ['Angular', 'NgRx', 'Google Maps', 'Apache ECharts', 'TypeScript'],
     description: 'Enterprise-grade fleet and transport management platform. Displays real-time live routing vectors and visual analytics dashboards handling massive daily shipments.',
+    longDescription: '20High is a comprehensive enterprise logistics solution designed to manage complex transportation networks. It features real-time telemetry, predictive routing algorithms, and deep integration with geographical information systems.',
+    features: [
+      'Real-time GPS tracking with Google Maps API',
+      'Dynamic routing and vector calculations',
+      'Advanced analytics with Apache ECharts',
+      'Microfrontend architecture using Nx monorepo',
+      'Automated quality gates with SonarQube'
+    ],
+    imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1000',
     githubUrl: 'https://github.com/soumyasrd/transport-analytics-dashboard',
     category: 'enterprise',
     stars: 148,
@@ -166,6 +186,15 @@ export const suggestedProjects: Project[] = [
     title: 'Ambulance dispatch & Emergency Workflow',
     tech: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Tailwind CSS'],
     description: 'Real-time emergency ambulance tracking and dispatch portal. Bridges the gap between caller, emergency team, and closest hospital via live telemetry.',
+    longDescription: 'This system optimizes emergency response times by connecting callers with dispatchers and ambulances in real-time. It uses WebSockets for instantaneous updates and maps for efficient routing.',
+    features: [
+      'Live WebSocket communication via Socket.io',
+      'Proximity-based dispatching algorithm',
+      'Interactive hospital and ambulance dashboards',
+      'Patient status tracking and history',
+      'Responsive design for mobile emergency units'
+    ],
+    imageUrl: 'https://images.unsplash.com/photo-1587749045985-44c161f950ad?auto=format&fit=crop&q=80&w=1000',
     githubUrl: 'https://github.com/soumyasrd/realtime-tracking-system',
     category: 'healthcare',
     stars: 87,
@@ -176,41 +205,44 @@ export const suggestedProjects: Project[] = [
     title: 'Scalable E-Commerce Engine',
     tech: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'Redis'],
     description: 'Secure, high-concurrency e-commerce backend and frontend portal with dynamic payment integrations, full-text search, and automated inventory sync.',
+    longDescription: 'A robust e-commerce platform built for scale. It handles high traffic volumes through efficient caching, database indexing, and a microservices-ready architecture.',
+    features: [
+      'Stateless JWT authentication with refresh tokens',
+      'Redis-based caching for product catalog and sessions',
+      'Full-text search using PostgreSQL GIN indexes',
+      'Dynamic payment gateway integration (Stripe/PayPal)',
+      'Dockerized deployment for elastic scaling'
+    ],
+    imageUrl: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=1000',
     githubUrl: 'https://github.com/soumyasrd/nestjs-auth-boilerplate',
     category: 'ecommerce',
     stars: 112,
     forks: 29,
     featured: true
+  }
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    name: 'Sarah Johnson',
+    role: 'Principal Architect',
+    company: 'LogisticsTech Global',
+    content: 'Soumya is an exceptional architect who transformed our legacy monorepo into a highly efficient Nx-based workspace. His expertise in Angular and NgRx is world-class.',
+    avatar: 'https://i.pravatar.cc/150?u=sarah'
   },
   {
-    title: 'Learning Management System (LMS)',
-    tech: ['React', 'Express.js', 'MongoDB', 'Chart.js', 'Tailwind CSS'],
-    description: 'Comprehensive portal for course creators and students. Features live tracking of curriculum progress, online testing engines, and dashboard statistics.',
-    githubUrl: 'https://github.com/soumyasrd/react-admin-dashboard',
-    category: 'learning',
-    stars: 96,
-    forks: 22,
-    featured: false
+    name: 'Michael Chen',
+    role: 'Senior Project Manager',
+    company: 'ESSPL',
+    content: 'I worked with Soumya on several high-stakes enterprise projects. His ability to lead a team while maintaining rigorous code quality standards is truly impressive.',
+    avatar: 'https://i.pravatar.cc/150?u=michael'
   },
   {
-    title: 'Enterprise Angular Monorepo',
-    tech: ['Angular', 'Nx Monorepo', 'RxJS', 'Tailwind CSS'],
-    description: 'Starter framework demonstrating bulletproof architecture, shared UI libraries, environment configurations, and independent micro-app delivery.',
-    githubUrl: 'https://github.com/soumyasrd/enterprise-angular-monorepo',
-    category: 'enterprise',
-    stars: 153,
-    forks: 41,
-    featured: false
-  },
-  {
-    title: 'NgRx State Management Dashboard',
-    tech: ['Angular', 'NgRx', 'RxJS', 'Material UI'],
-    description: 'Demonstrator project for building ultra-complex, stateful enterprise dashboard modules using actions, reducers, selectors, and entity adapters.',
-    githubUrl: 'https://github.com/soumyasrd/ngrx-dashboard-system',
-    category: 'enterprise',
-    stars: 89,
-    forks: 12,
-    featured: false
+    name: 'Priya Sharma',
+    role: 'Fullstack Lead',
+    company: 'Zemusi Tech',
+    content: 'A brilliant developer with a keen eye for detail. Soumya\'s contributions to our shared component library saved hundreds of development hours across the organization.',
+    avatar: 'https://i.pravatar.cc/150?u=priya'
   }
 ];
 

@@ -100,10 +100,10 @@
 
 /* Theme 5: Pure Zinc Monochrome (Dark Mode) */
 :root[data-theme="cyberpunk"] {
-  --bg-primary: #0c0c0e; /* Deep obsidian zinc */
-  --bg-secondary: #161619; /* High-contrast zinc panel */
-  --accent-primary: #ffffff; /* Minimalist pure white */
-  --accent-secondary: #71717a; /* Zinc gray */
+  --bg-primary: #0c0c0e; 
+  --bg-secondary: #161619; 
+  --accent-primary: #ffffff; 
+  --accent-secondary: #71717a; 
   --accent-glow: rgba(255, 255, 255, 0.05);
   --text-primary: #ffffff;
   --text-muted: #a1a1aa;
@@ -111,11 +111,144 @@
   --font-body: 'Inter', sans-serif;
   --font-display-font: 'Inter', sans-serif;
   --font-code: 'JetBrains Mono', monospace;
-  --card-radius: 4px; /* Clean geometric outlines */
+  --card-radius: 4px; 
   --theme-glow-style: 0 4px 20px rgba(0, 0, 0, 0.6);
   --glass-bg: rgba(22, 22, 25, 0.95);
   --glass-border: rgba(255, 255, 255, 0.1);
   letter-spacing: -0.01em;
+}
+
+/* Theme 6: Midnight Nebula (Deep Purple) */
+:root[data-theme="nebula"] {
+  --bg-primary: #0a061a;
+  --bg-secondary: #130b2e;
+  --accent-primary: #c084fc;
+  --accent-secondary: #6366f1;
+  --accent-glow: rgba(192, 132, 252, 0.1);
+  --text-primary: #f5f3ff;
+  --text-muted: #a5b4fc;
+  --border-color: rgba(192, 132, 252, 0.15);
+  --font-body: 'Inter', sans-serif;
+  --font-display-font: 'Outfit', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 20px;
+  --theme-glow-style: 0 0 40px rgba(192, 132, 252, 0.1);
+  --glass-bg: rgba(19, 11, 46, 0.8);
+  --glass-border: rgba(192, 132, 252, 0.2);
+}
+
+/* Theme 7: Retro Terminal (Classic Green) */
+:root[data-theme="retro"] {
+  --bg-primary: #0d0d0c;
+  --bg-secondary: #1a1a18;
+  --accent-primary: #10b981;
+  --accent-secondary: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.1);
+  --text-primary: #d1fae5;
+  --text-muted: #34d399;
+  --border-color: rgba(16, 185, 129, 0.2);
+  --font-body: 'JetBrains Mono', monospace;
+  --font-display-font: 'JetBrains Mono', monospace;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 0px;
+  --theme-glow-style: inset 0 0 10px rgba(16, 185, 129, 0.1);
+  --glass-bg: rgba(13, 13, 12, 0.9);
+  --glass-border: rgba(16, 185, 129, 0.3);
+}
+
+/* Theme 8: Midnight Gold (Premium) */
+:root[data-theme="gold"] {
+  --bg-primary: #050505;
+  --bg-secondary: #0f0f0f;
+  --accent-primary: #fbbf24;
+  --accent-secondary: #d97706;
+  --accent-glow: rgba(251, 191, 36, 0.05);
+  --text-primary: #ffffff;
+  --text-muted: #a3a3a3;
+  --border-color: rgba(251, 191, 36, 0.2);
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-display-font: 'Playfair Display', serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 16px;
+  --theme-glow-style: 0 10px 40px rgba(251, 191, 36, 0.05);
+  --glass-bg: rgba(15, 15, 15, 0.9);
+  --glass-border: rgba(251, 191, 36, 0.25);
+}
+
+/* Theme 9: Prism Glass (Translucent) */
+:root[data-theme="prism"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --accent-primary: #6366f1;
+  --accent-secondary: #ec4899;
+  --accent-glow: rgba(99, 102, 241, 0.05);
+  --text-primary: #0f172a;
+  --text-muted: #475569;
+  --border-color: rgba(99, 102, 241, 0.1);
+  --font-body: 'Inter', sans-serif;
+  --font-display-font: 'Outfit', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --card-radius: 30px;
+  --theme-glow-style: 0 20px 50px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.8);
+}
+
+/* ----------------------------------------------------
+   Enhanced Utility Classes
+   ---------------------------------------------------- */
+.creative-card {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: visible; 
+  isolation: isolate; /* Create new stacking context */
+  z-index: 1;
+}
+
+.creative-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px; /* Tighter inset */
+  background: linear-gradient(
+    45deg, 
+    transparent, 
+    var(--accent-primary), 
+    var(--accent-secondary), 
+    transparent
+  );
+  background-size: 200%;
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  border-radius: calc(var(--card-radius) + 1px);
+}
+
+.creative-card:hover {
+  z-index: 10; /* Bring to front when hovered */
+}
+
+.creative-card:hover::before {
+  opacity: 0.25;
+  animation: border-glow 4s linear infinite;
+}
+
+@keyframes border-glow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes reveal {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ----------------------------------------------------
@@ -246,10 +379,47 @@ section {
   opacity: 0.2;
 }
 
-/* Caret Blinks */
+/* ----------------------------------------------------
+   Animations & Keyframes
+   ---------------------------------------------------- */
 @keyframes blink {
   50% { border-color: transparent; }
 }
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient 4s linear infinite;
+}
+
+.cyber-scanlines {
+  position: relative;
+}
+
+.cyber-scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  ),
+  linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
 .typing-caret {
   border-right: 3px solid var(--accent-primary);
   animation: blink 0.75s step-end infinite;

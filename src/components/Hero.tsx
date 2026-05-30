@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, ArrowRight, Terminal as TermIcon, Code2, Globe } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { motion } from 'framer-motion';
 import { useI18n } from '../context/I18nContext';
@@ -9,19 +9,27 @@ export const Hero: React.FC = () => {
   const [titleIdx, setTitleIdx] = useState<number>(0);
   const [typedText, setTypedText] = useState<string>('');
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [activeTheme, setActiveTheme] = useState<string>('dark-dev');
+  const [activeTheme, setActiveTheme] = useState<string>(() => {
+    try {
+      return localStorage.getItem('srd-portfolio-theme') || 'dark-dev';
+    } catch (e) {
+      return 'dark-dev';
+    }
+  });
 
   // Listen to active theme changes
   useEffect(() => {
-    const savedTheme = localStorage.getItem('srd-portfolio-theme') || 'dark-dev';
-    setActiveTheme(savedTheme);
-
-    const handleThemeChange = (e: any) => {
-      setActiveTheme(e.detail);
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setActiveTheme(customEvent.detail);
     };
     window.addEventListener('theme-changed', handleThemeChange);
     return () => window.removeEventListener('theme-changed', handleThemeChange);
   }, []);
+
+  const isClassical = activeTheme === 'classical';
+  const isRetro = activeTheme === 'retro';
+  const isGold = activeTheme === 'gold';
 
   // Rotating typing effect logic
   useEffect(() => {
@@ -32,7 +40,7 @@ export const Hero: React.FC = () => {
       t('hero.titles.3')
     ];
     const fullText = titles[titleIdx] || '';
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
 
     if (isDeleting) {
       timer = setTimeout(() => {
@@ -48,18 +56,22 @@ export const Hero: React.FC = () => {
     if (!isDeleting && typedText === fullText) {
       timer = setTimeout(() => setIsDeleting(true), 1800);
     } else if (isDeleting && typedText === '') {
-      setIsDeleting(false);
-      setTitleIdx((prev) => (prev + 1) % titles.length);
+      setTimeout(() => {
+        setIsDeleting(false);
+        setTitleIdx((prev) => (prev + 1) % titles.length);
+      }, 0);
     }
 
     return () => clearTimeout(timer);
-  }, [typedText, isDeleting, titleIdx, language, t]);
+  }, [typedText, isDeleting, titleIdx, t]);
 
   // Reset typing carousel on language change to keep it robust and synchronous
   useEffect(() => {
-    setTypedText('');
-    setIsDeleting(false);
-    setTitleIdx(0);
+    setTimeout(() => {
+      setTypedText('');
+      setIsDeleting(false);
+      setTitleIdx(0);
+    }, 0);
   }, [language]);
 
   const scrollToAnchor = (id: string) => {
@@ -72,147 +84,194 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[85vh] flex flex-col justify-center items-center py-20 px-4 sm:px-8 md:px-12 overflow-hidden select-none border-b border-border-custom"
+      className="relative w-full min-h-screen flex flex-col justify-center items-center py-20 px-4 sm:px-8 md:px-12 overflow-hidden select-none border-b border-border-custom"
     >
       {/* Dynamic Theme Grids & Background Orbs */}
       <div className="absolute inset-0 theme-grid-overlay z-0" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-accent-glow blur-[110px] pointer-events-none z-0 animate-pulse duration-5000" />
+      
+      {/* Animated Background Shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+            x: [0, 100, 0],
+            y: [0, -50, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-accent-primary/10 rounded-full blur-[100px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0],
+            x: [0, -100, 0],
+            y: [0, 100, 0]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-20 -right-20 w-[600px] h-[600px] bg-accent-secondary/10 rounded-full blur-[100px]"
+        />
+      </div>
 
       {/* Floating Interactive Technical Tags */}
       <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden hidden md:block">
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[22%] left-[12%] glass-panel px-3.5 py-2 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold text-text-primary shadow-sm"
-        >
-          <Code2 size={12} className="text-accent-primary animate-pulse" /> NgRx Architecture
-        </motion.div>
-        <motion.div
-          animate={{ y: [0, 12, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-[48%] right-[10%] glass-panel px-3.5 py-2 flex items-center gap-2 border border-border-custom text-xs font-mono font-bold text-text-primary shadow-sm"
-        >
-          <Globe size={12} className="text-accent-secondary animate-pulse" /> NestJS APIs
-        </motion.div>
+        {[
+          { label: 'NgRx Architecture', top: '25%', left: '15%', color: 'var(--accent-primary)', delay: 0 },
+          { label: 'NestJS Scalability', top: '50%', right: '12%', color: 'var(--accent-secondary)', delay: 1 },
+          { label: 'Microfrontends', top: '75%', left: '20%', color: 'var(--accent-primary)', delay: 2 },
+          { label: 'Cloud Native', top: '15%', right: '25%', color: 'var(--accent-secondary)', delay: 3 },
+        ].map((tag, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: [0, -15, 0],
+            }}
+            transition={{ 
+              duration: 5, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: tag.delay 
+            }}
+            className="absolute glass-panel px-5 py-2.5 flex items-center gap-3 border border-border-custom text-[11px] font-black font-mono text-text-primary shadow-2xl backdrop-blur-2xl rounded-2xl"
+            style={{ top: tag.top, left: tag.left, right: tag.right }}
+          >
+            <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: tag.color }} />
+            {tag.label}
+          </motion.div>
+        ))}
       </div>
 
       {/* Main Core Landing Content */}
-      <div className="relative z-20 w-full max-w-5xl text-center flex flex-col items-center space-y-8 select-text">
+      <div className="relative z-20 w-full max-w-5xl text-center flex flex-col items-center space-y-12 select-text">
         
         {/* Profile Circle with Glowing Spotlight Rings */}
-        <div className="relative group select-none">
-          <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-border-custom bg-bg-secondary flex items-center justify-center shadow-lg">
-            <img
-              src="/developer_avatar.png"
-              alt={personalInfo.name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
-            />
+        <motion.div 
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="relative group select-none"
+        >
+          <motion.div
+            animate={{ 
+              rotate: 360,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute -inset-12 bg-gradient-to-r from-accent-primary/20 via-accent-secondary/20 to-accent-primary/20 rounded-full blur-[60px] opacity-50 group-hover:opacity-100 transition duration-1000"
+          />
+          <div className="relative w-40 h-40 md:w-52 md:h-48 rounded-[50px] rotate-3 p-1.5 bg-gradient-to-tr from-accent-primary via-white/20 to-accent-secondary shadow-2xl overflow-hidden transition-transform duration-700 group-hover:rotate-0">
+            <div className="w-full h-full rounded-[48px] overflow-hidden bg-bg-secondary flex items-center justify-center border-2 border-white/10">
+              <img
+                src="/developer_avatar.png"
+                alt={personalInfo.name}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-115 -rotate-3 group-hover:rotate-0"
+              />
+            </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Brand Tag */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-bg-secondary/60 border border-border-custom rounded-full text-xs font-semibold text-accent-primary uppercase tracking-widest font-mono shadow-sm select-none">
-          <TermIcon size={12} className="animate-pulse" /> {t('hero.badge')}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-accent-primary/20 blur-xl rounded-full" />
+          <div className="relative inline-flex items-center gap-3 px-8 py-2.5 bg-bg-secondary/90 backdrop-blur-xl border border-white/10 rounded-full text-[10px] font-black text-accent-primary uppercase tracking-[0.5em] font-mono shadow-2xl">
+            <Sparkles size={14} className="text-amber-400 animate-pulse" /> {t('hero.badge')}
+          </div>
+        </motion.div>
 
-        {/* Title Mappings Conditionally Built */}
-        {activeTheme === 'cyberpunk' ? (
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight font-mono">
+        {/* Title Mappings */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
+          className="space-y-6"
+        >
+          <h1 className={`text-5xl sm:text-7xl md:text-9xl font-black tracking-tight text-text-primary uppercase leading-[0.8] ${isClassical ? 'font-serif' : 'font-display'}`}>
             {t('hero.title1')} <br />
-            <span className="bg-white text-black px-4 py-0.5 rounded inline-block mt-2">
+            <span className={`relative inline-block mt-6 text-transparent bg-clip-text bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-primary bg-[length:200%_auto] animate-gradient ${isRetro ? 'font-mono' : ''}`}>
               {t('hero.title2')}
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: '100%' }}
+                transition={{ delay: 1.2, duration: 1.2 }}
+                className={`absolute -bottom-4 left-0 h-2 bg-accent-primary/20 rounded-full blur-sm ${isGold ? 'bg-accent-primary/40 shadow-[0_0_20px_var(--accent-primary)]' : ''}`} 
+              />
             </span>
           </h1>
-        ) : activeTheme === 'classical' ? (
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-extrabold tracking-tight text-text-primary uppercase leading-tight">
-            {t('hero.title1')} <br />
-            <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent italic">
-              {t('hero.title2')}
-            </span>
-          </h1>
-        ) : (
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-text-primary uppercase leading-tight">
-            {t('hero.title1')} <br />
-            <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-              {t('hero.title2')}
-            </span>
-          </h1>
-        )}
+        </motion.div>
 
-        {/* Typing rotation subtitle */}
-        <div className="min-h-8 py-1.5 flex items-center justify-center font-mono text-xs xs:text-sm md:text-lg text-text-muted select-none">
-          <span>{t('hero.expert')}</span>
-          <span className="ml-2 font-bold text-text-primary typing-caret pr-1.5">
-            {typedText}
-          </span>
-        </div>
+        {/* Rotating Typing Carousel */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="h-12 py-2 flex items-center justify-center font-mono text-base md:text-2xl text-text-muted select-none"
+        >
+          <div className={`bg-bg-secondary/60 backdrop-blur-xl px-8 py-3 rounded-3xl border border-white/5 shadow-2xl ${isRetro ? 'border-accent-primary/30 text-accent-primary' : ''}`}>
+             <span className="text-accent-primary font-black opacity-50">{isRetro ? 'root@srd_os:~#' : 'SRD_SYSTEM:'} </span>
+             <span>{t('hero.expert')}</span>
+             <span className={`ml-3 font-black text-text-primary typing-caret pr-2 ${isRetro ? 'text-accent-primary' : ''}`}>
+               {typedText}
+             </span>
+          </div>
+        </motion.div>
 
-        {/* Short Summary biography supporting elegant drop caps */}
-        {activeTheme === 'classical' ? (
-          <p className="max-w-xl text-xs md:text-sm text-text-muted leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-accent-primary first-letter:float-left first-letter:mr-2.5 first-letter:font-display">
-            {t('hero.bio')}
-          </p>
-        ) : (
-          <p className="max-w-xl text-xs md:text-sm text-text-muted leading-relaxed">
-            {t('hero.bio')}
-          </p>
-        )}
-
-        {/* Dynamic CTA Button Actions */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 select-none">
+        {/* Action Buttons Row */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="flex flex-wrap justify-center gap-8 pt-8"
+        >
           <button
             onClick={() => scrollToAnchor('projects')}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-accent-primary text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md hover:scale-105 active:scale-95 transition-all group"
-            style={{ boxShadow: 'var(--theme-glow-style)' }}
+            className="group relative px-10 py-5 bg-accent-primary text-white rounded-[24px] font-black text-[12px] uppercase tracking-[0.3em] shadow-[0_20px_50px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 transition-all overflow-hidden"
           >
-            {t('hero.cta.projects')}
-            <ArrowRight size={13} className="transition-transform group-hover:translate-x-1.5" />
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            <span className="relative flex items-center gap-3">
+               {t('hero.cta.projects')} <ArrowRight size={18} />
+            </span>
           </button>
-          
+
           <button
             onClick={() => scrollToAnchor('contact')}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-bg-secondary hover:bg-border-custom border border-border-custom text-text-primary text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 animate-pulse"
+            className="px-10 py-5 bg-bg-secondary/90 backdrop-blur-2xl border border-white/10 text-text-primary rounded-[24px] font-black text-[12px] uppercase tracking-[0.3em] hover:bg-bg-primary hover:border-accent-primary/50 transition-all active:scale-95 shadow-2xl"
           >
             {t('hero.cta.book')}
           </button>
-
-          <button
-            onClick={() => window.print()}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-transparent hover:bg-white/5 border border-dashed border-border-custom text-text-muted hover:text-text-primary text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all"
-          >
-            {t('hero.cta.cv')}
-          </button>
-        </div>
+        </motion.div>
 
         {/* Social connections links */}
-        <div className="flex items-center gap-6 pt-8 select-none">
-          <a
-            href={`https://github.com/${personalInfo.github}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="GitHub"
-          >
-            <Github size={18} />
-          </a>
-          <a
-            href={`https://${personalInfo.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="LinkedIn"
-          >
-            <Linkedin size={18} />
-          </a>
-          <a
-            href={`mailto:${personalInfo.email}`}
-            className="text-text-muted hover:text-accent-primary transition-colors hover:scale-110 active:scale-95"
-            title="Email"
-          >
-            <Mail size={18} />
-          </a>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="flex items-center gap-10 pt-12 select-none"
+        >
+          {[
+            { icon: <Github size={24} />, href: `https://github.com/${personalInfo.github}`, label: 'GitHub' },
+            { icon: <Linkedin size={24} />, href: `https://${personalInfo.linkedin}`, label: 'LinkedIn' },
+            { icon: <Mail size={24} />, href: `mailto:${personalInfo.email}`, label: 'Email' },
+          ].map((social, i) => (
+            <a
+              key={i}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-muted hover:text-accent-primary transition-all duration-300 hover:scale-125 active:scale-90"
+              title={social.label}
+            >
+              {social.icon}
+            </a>
+          ))}
+        </motion.div>
 
       </div>
     </section>

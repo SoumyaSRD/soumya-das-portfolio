@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, Compass, Palette, Sparkles, Terminal as TermIcon, FileDown } from 'lucide-react';
 
 interface PaletteItem {
@@ -18,11 +18,11 @@ export const CommandPalette: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const togglePalette = () => {
-    setIsOpen(!isOpen);
+  const togglePalette = useCallback(() => {
+    setIsOpen((prev) => !prev);
     setSearchQuery('');
     setSelectedIndex(0);
-  };
+  }, []);
 
   // Keyboard shortcut listener (Cmd+K / Ctrl+K)
   useEffect(() => {
@@ -37,7 +37,7 @@ export const CommandPalette: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, togglePalette]);
 
   // Focus input when opened
   useEffect(() => {
@@ -238,7 +238,7 @@ export const CommandPalette: React.FC = () => {
 
   // Adjust selected index on query change
   useEffect(() => {
-    setSelectedIndex(0);
+    setTimeout(() => setSelectedIndex(0), 0);
   }, [searchQuery]);
 
   if (!isOpen) {
